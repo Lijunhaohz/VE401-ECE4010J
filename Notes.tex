@@ -1,0 +1,1261 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[margin=0.9in]{geometry}
+\usepackage{siunitx} % Provides the \SI{}{} and \si{} command for typesetting SI units
+\usepackage{graphicx} % Required for the inclusion of images
+\usepackage{subfigure}
+\usepackage{multirow}
+\usepackage{amsmath} % Required for some math elements 
+% \usepackage{indentfirst}
+% \usepackage{times} % Uncomment to use the Times New Roman font
+\usepackage{appendix}
+\usepackage{verbatim}
+\usepackage{fontspec}
+\usepackage{setspace}
+\usepackage{float}
+\usepackage{array}
+\usepackage{amssymb}
+
+\title{ \rule{\textwidth}{0.3mm} \\ \textbf{UM–SJTU JOINT INSTITUTE \\ ~\\ VE401 / ECE4010J \\ ~\\ PROBABILISTIC METHODS IN ENGINEERING} \\ \rule{\textwidth}{0.3mm} 
+\\ [30 mm]
+\Large{Lecture Notes} \\
+[15 mm]
+} % Title
+
+\author{Li Junhao} % Author name
+
+\date{\today} % Date for the report
+
+\begin{document}
+\scshape
+% \setmainfont{Times New Roman}
+
+\maketitle
+
+    \thispagestyle{empty}
+    
+    
+    \newpage
+    
+    
+    \tableofcontents
+    % \thispagestyle{empty}
+    
+    
+    \newpage
+    
+    %----------------------------------------------------------------------------------------
+    %	SECTION 1
+    %----------------------------------------------------------------------------------------
+    
+    \setcounter{page}{1}
+    \upshape
+    \section{Basic Probability Theories}
+    \subsection{Sample Space}
+    Suppose that a non-empty set $S$ is given. A $\sigma$-field $\mathcal{F} $ on $S$ is a family of subsets of $S$ such that\\
+(i) $\emptyset \in \mathcal{F} $;\\
+(ii) if $A \in \mathcal{F} $, then $S \backslash A \in \mathcal{F} $;\\
+(iii) if $A_1, A_2, A_3, \ldots \in \mathcal{F} $ is a finite or countable sequence of subsets, then the union $\bigcup_k A_k \in \mathcal{F} $.
+    \subsection{Independence}
+    Random Variables $X$ and $Y$ are independent if 
+    $$P[X\cap Y] = P[X]P[Y] \quad \text{or} \quad f_{XY}(x,y)= f_X(x)\cdot f_Y(y)$$
+    This is equivalent to 
+    $$
+    P[X\mid Y] = P[X] \quad \text{ if } P[Y] \neq 0
+    $$
+    $$
+    P[Y\mid X] = P[Y] \quad \text{ if } P[X] \neq 0
+    $$
+    Do notice that the condition $P[Y] \neq 0$ (or $P[X] \neq 0$) is important.
+    \subsection{Expectation}
+    $$E[X+Y] = E[X] + E[Y] \quad E[cX] = cE[X]$$
+    This is always true no matter whether $X$ and $Y$ are independent or not.\\
+    \textbf{Theorem.} Suppose $g(x)$ is a linear function, then
+    $$
+    E[g(X)]=g(E[X])
+    $$
+    If $g(x)$ is not linear, this statement is usually false.
+    \subsection{Moment}
+    \textbf{Definition.} Given a random variable $X$, the quantities
+    $$
+    \mathrm{E}\left[X^n\right], \quad n \in \mathbb{N},
+    $$
+    are known as the $\boldsymbol{n}^{\text {th }}$ (ordinary) moments of $X$.
+    The quantities
+    $$
+    \mathrm{E}\left[\left(\frac{X-\mu}{\sigma}\right)^n\right], \quad n=3,4,5, \ldots,
+    $$
+    are called the $\boldsymbol{n}^{\text {th }}$ central moments of $X$.
+
+
+
+
+
+
+    \section{Discrete Random Variable Distribution}
+    \subsection{Moment-Generating Function}
+    \textbf{Definition}. Let $\left(X, f_X\right)$ be a random variable and such that the sequence of moments $\mathrm{E}\left[X^n\right], n \in \mathbb{N}$, exists.
+If the power series
+\begin{equation}
+m_X(t):=\mathrm{E}\left[e^{t X}\right]=\sum_{k=0}^{\infty} \frac{\mathrm{E}\left[X^k\right]}{k !} t^k
+\end{equation}
+has radius of convergence $\varepsilon>0$, the thereby defined function
+$$
+m_X:(-\varepsilon, \varepsilon) \rightarrow \mathbb{R}
+$$
+is called the moment-generating function for $X$.\\
+And we have
+\begin{equation}
+    E\left[X^k\right]=\left.\frac{d^k m_X(t)}{d t^k}\right|_{t=0}
+    \end{equation}
+\textbf{Theorem} The moment-generating function of a linear function of a ramdom variable is given by
+\begin{equation}
+    M_Y(s)=E\left[e^{s(a X+b)}\right]=e^{s b} E\left[e^{s a X}\right]=e^{s b} M_X(s a)
+    \end{equation}
+
+    \subsection{Bernoulli Distribution}
+    $$
+    X \sim \text { Bernoulli }(p), \quad f_X(x)= \begin{cases}1-p & \text { for } x=0 \\ p & \text { for } x=1\end{cases}
+$$
+    With $E[X]=p$ and $\operatorname{Var}[X]=p(1-p)$.
+
+    \subsection{Binomial Distribution}
+    $$
+    X \sim \text { B }(p), \quad f_X(x)=\binom{n}{x}  p^x(1-p)^{n-x}
+$$
+    With $E[X]=np$ and $\operatorname{Var}[X]=np(1-p)$.\\
+    The moment-generating function is
+    $$
+M(s)=\sum_{x=0}^{\infty} e^{s x}\binom{n}{x} p^x(1-p)^{n-x}=\sum_{x=0}^{\infty}\binom{n}{x}\left(e^s p\right)^x(1-p)^{n-x}=\left(1-p+e^s p\right)^x
+$$
+
+    \subsection{Geometric Distribution}
+    Geometric random variable $X$ represents the total number of trails at first success.
+    $$
+    X \sim \text { Geom }(p), \quad f_X(x)=(1-p)^{x-1} p
+$$
+    With $E[X]=\dfrac{1}{p}$ and $\operatorname{Var}[X]=\dfrac{1-p}{p^2}$\\
+    The moment-generating function is
+    $$
+M(s)=\sum_{x=1}^{\infty} e^{s x} p(1-p)^{x-1}=p e^s \sum_{x=0}^{\infty}\left(e^s(1-p)\right)^x=\frac{p e^s}{1-e^s(1-p)}
+$$
+
+    \subsection{Pascal Distribution}
+    The Pascal random variable $X$ means that the $r^{th}$ success is obtained in the $X^{th}$ trial.
+    \begin{equation}
+        f_X(x)=\binom{x-1}{r-1} p^r(1-p)^{x-r}
+        \end{equation}
+    With $E[X]=\dfrac{r}{p}$ and $\operatorname{Var}[X]=\dfrac{r(1-p)}{p^2}$\\
+        The moment-generating function is
+$$
+m_X:(-\infty,-\ln q) \rightarrow \mathbb{R}, \quad m_X(t)=\frac{\left(p e^t\right)^r}{\left(1-q e^t\right)^r}, \quad q=1-p
+$$
+    \subsection{Negative Binomial}
+    \textbf{Definition.} Negative Binomial is defined as
+    \begin{equation}
+        \binom{-r}{x} =(-1)^x\binom{r-1+x}{r-1}(r>0)
+    \end{equation}
+
+    \section{Poisson Process}
+    \subsection{Precise Postulates of Rate of Arrivals}
+    (i) The probability that exactly one arrival will occur in an interval of width $\Delta t$ is
+$$
+\lambda \cdot \Delta t+o(\Delta t) .
+$$
+(ii) The probability that exactly zero arrivals will occur in the interval is
+$$
+1-\lambda \cdot \Delta t+o(\Delta t) .
+$$
+(iii) The probability that two or more arrivals occur in the interval is
+$$
+o(\Delta t) \text {. }
+$$
+    \subsection{Poisson Distribution}
+    During any time interval $t$, the probability to have $x$ arrivals is:
+    \begin{equation}
+        p(x,t)=\dfrac{(\lambda t)^x}{x !} e^{-\lambda t}
+        \end{equation}
+        \textbf{Definition.} Let $k \in \mathbb{R}$. A random variable $\left(X, f_X\right)$ with
+$$
+X: S \rightarrow \mathbb{N}
+$$
+and density function $f_X: \mathbb{N} \rightarrow \mathbb{R}$ given by
+\begin{equation}
+    f_X(x)=\dfrac{k^x e^{-k}}{x !}
+\end{equation}
+is said to follow a Poisson distribution with parameter $k$.\\
+The expectation, variance and moment-generating function of Poisson distribution is
+$$
+    E[X]=k=\lambda t \quad \operatorname{Var}[X]=k=\lambda t \quad m_X(t)=e^{k\left(e^t-1\right)}
+$$
+
+\subsection{The Time for the First Arrival}
+The time for the first arrival follows exponential distribution, i.e.
+$$
+f_T(t)=\lambda e^{-\lambda t}, \quad E[T]=\dfrac{1}{\lambda}, \quad \operatorname{Var}[T]=\dfrac{1}{\lambda^2}
+$$
+\subsection{The Time for the $k$-th Arrival}
+The time for the $k$-th arrival follows
+$$
+f_{T_k}(t)=\dfrac{\lambda^k t^{k-1}e^{-\lambda t}}{(k-1)!}, \quad E[T]=\dfrac{k}{\lambda}, \quad \operatorname{Var}[T]=\dfrac{k}{\lambda^2}
+$$
+The time for the first arrival follows exponential distribution, i.e.
+$$
+f_T(t)=\lambda e^{-\lambda t}, \quad E[T]=\dfrac{1}{\lambda}, \quad \operatorname{Var}[T]=\dfrac{1}{\lambda^2}
+$$
+\subsection{Approximate Binomial Distribution}
+In binomial distribution, if $n$ is very large and $p$ approaches 0, then we can use Poisson distribution to approximate binomial distribution, i.e., we take $k:=np$, and yield
+\begin{equation}
+    \binom{n}{m} p^m(1-p)^{n-m} \approxeq \dfrac{k^m}{m !} e^{-k}
+    \end{equation}
+
+
+
+    \section{\textsc{Continuous Random Variables}}
+    \subsection{Exponential Distribution}
+    \textbf{Definition.}
+A continuous random variable $\left(X, f_\beta\right)$ follows exponential distribution with parameter $\beta$ if the probability density function is defined by
+\begin{equation}
+f_\beta(x)= \begin{cases}\beta e^{-\beta x}, & x>0 \\ 0, & x \leq 0\end{cases}
+\end{equation}
+Expectation: $\mathrm{E}[X]=\dfrac{1}{\beta}$
+Variance: $\operatorname{Var}[X]=\dfrac{1}{\beta^2}$
+Moment-generating function:
+ $$
+ M_X:(-\infty, \beta) \rightarrow \mathbb{R}, \quad M_X(t)=\frac{1}{1-t / \beta}
+ $$
+    \subsection{Gamma Distribution}
+    \textbf{Definition.}Let $\alpha, \beta \in \mathbb{R}, \alpha, \beta>0$. A continuous random variable $\left(X, f_{\alpha, \beta}\right)$ follows a gamma distribution with parameters $\alpha$ and $\beta$ if the probability density function is given by
+\begin{equation}
+f_{\alpha, \beta}(x)= \begin{cases}\dfrac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta x}, & x>0 \\ 0, & x \leq 0\end{cases}
+\end{equation}
+where $\Gamma(\alpha)=\int_0^{\infty} z^{\alpha-1} e^{-z} \mathrm{~d} z, \alpha>0$ is the Euler gamma function.
+Expectation: $\mathrm{E}[X]=\frac{\alpha}{\beta}$. Variance: $\operatorname{Var}[X]=\frac{\alpha}{\beta^2}$
+Moment-generating function:
+$$
+M_X:(-\infty, \beta) \rightarrow \mathbb{R}, \quad M_X(t)=\frac{1}{(1-t / \beta)^\alpha}
+$$
+\subsection{Relationship between Poisson Distribution, Exponential Distribution and Gamma Distribution}
+(1) The time needed for the next $r$ arrivals in a Poisson process with rate $\lambda$ is determined by a Gamma distribution with parameters $\alpha=r$ and $\beta=\lambda$.\\
+(2) Sum of exponential distributed random variables with the same $\beta$ follows Gamma distribution.\\
+(3) Sum of gamma distributed random variables with the same $\beta$ follows Gamma distribution (The new $\alpha$ will be the sum of $\alpha^{\prime}$ s) (check the M.G.F)
+    
+
+\subsection{Normal Distribution}
+Let $\mu \in \mathbb{R}, \sigma>0$. A continuous random variable $\left(X, f_X\right)$ with density
+\begin{equation}
+f_X(x)=\dfrac{1}{\sqrt{2 \pi} \sigma} e^{-((x-\mu) / \sigma)^2 / 2}
+\end{equation}
+is said to follow a normal distribution with parameters $\mu$ and $\sigma$.\\
+Moment-generating function:
+$$
+M_X: \mathbb{R} \rightarrow \mathbb{R}, \quad M_X(t)=e^{\mu t+\sigma^2 t^2 / 2}
+$$
+\subsubsection{Independent Normal Distribution}
+    \textbf{Theorem.} Suppose $X_1 \sim N(\mu_1, \sigma_1^2)$ and $X_2 \sim N(\mu_2, \sigma_2^2)$, then $X_1+X_2 \sim N(\mu_1+\mu_2, \sigma_1^2+\sigma_2^2)$. \\
+    \textbf{Corollary.} Let $X_1, \ldots, X_n$ be a sample of size $n$ from the distribution of a random variable $X$ that follows a normal distribution with mean $\mu$ and variance $\sigma^2$. Then $\bar{X} \sim  N(\mu, \dfrac{\sigma^2}{N})$.
+\subsubsection{Approximate the Binomial Distribution}
+    \begin{equation}
+        P[X\leq y]=\sum_{x=0}^{y}\binom{n}{x}p^x(1-p)^{n-x}\approx \Phi(\dfrac{y+\frac{1}{2}-np}{\sqrt{np(1-p)}}) 
+    \end{equation}
+    \begin{equation}
+        P[k \leq X\leq l]=\approx \Phi(\dfrac{l+\frac{1}{2}-np}{\sqrt{np(1-p)}}) - \Phi(\dfrac{k-\frac{1}{2}-np}{\sqrt{np(1-p)}}) 
+    \end{equation}
+    Requirements:
+    $$
+n p>5 \text { if } p \leq \frac{1}{2} \quad \text { or } \quad n(1-p)>5 \text { if } p>\frac{1}{2}
+$$
+Notice that the term $1/2$ is called the \textbf{half-unit correction}.
+\subsubsection{Error Function}
+In Mathematica, the cumulative distribution function is expressed through the error function, defined as
+$$
+\operatorname{erf}(z):=\frac{2}{\sqrt{\pi}} \int_0^z e^{-t^2} d t, \quad \operatorname{erfc}(z):=1-\operatorname{erf}(z)
+$$
+\subsubsection{Estimates on Variability}
+\textbf{Theorem.} Let $X$ be normally distributed with parameters $\mu$ and $\sigma$. Then
+$$
+\begin{aligned}
+P[-\sigma<X-\mu<\sigma] & =0.68 \\
+P[-2 \sigma<X-\mu<2 \sigma] & =0.95 \\
+P[-3 \sigma<X-\mu<3 \sigma] & =0.997
+\end{aligned}
+$$
+Hence $68 \%$ of the values of a normal random variable lie within one standard deviation of the mean, 95\% lie within two standard deviations, and $99.7 \%$ lie within three standard deviations. 
+
+\subsection{The Chi Distribution}
+The Chi distribution has the following definition
+$$
+\chi_n:=\sqrt{\sum_{i=1}^n Z_i^2},
+$$
+where $Z_i$ follows the normal distribution. And its probability density function is 
+\begin{equation}
+    f_{\chi_n}(y)=F_{\chi_n}^{\prime}(y)=\frac{2}{2^{n / 2} \Gamma\left(\frac{n}{2}\right)} y^{n-1} e^{-y^2 / 2}
+    \end{equation}
+Chi-squared distribution
+\begin{equation}
+    \begin{aligned}
+    f_{\chi_n^2}(y) & =F_{\chi_n^2}^{\prime}(y)=\frac{1}{\Gamma\left(\frac{n}{2}\right) 2^{n / 2-1}} \frac{d}{d y} \int_0^{\sqrt{y}} e^{-r^2 / 2} r^{n-1} d r \\
+    & =\frac{1}{2^{n / 2} \Gamma\left(\frac{n}{2}\right)} y^{n / 2-1} e^{-y / 2}
+    \end{aligned}
+    \end{equation}
+    A chi-squared distribution with $n$ degrees of freedom corresponds to the Gamma distribution with $\alpha=n / 2$ and $\beta=1 / 2$\\
+    $$\mathrm{E}\left[\chi_n^2\right]=n, \quad \operatorname{Var}\left[\chi_n^2\right]=2 n$$
+\textbf{Lemma}. Let $\chi_{\gamma_1}^2, \ldots, \chi_{\gamma_n}^2$ be $n$ independent random variables following chi-squared distributions with $\gamma_1, \ldots, \gamma_n$ degrees of freedom, respectively. Then
+    \begin{equation}
+        \chi_\alpha^2:=\sum_{k=1}^n \chi_{\gamma_k}^2
+    \end{equation}
+    is a chi-squared random variable with $\alpha=\sum_{k=1}^n \gamma_k$ degrees of freedom.
+
+
+
+        \section{\textsc{Multivariable Random Variables}}
+        \subsection{Expectation}
+        We define the expected value or expectation for $X$ as the vector
+$$
+\mathrm{E}[X]=\left(\begin{array}{c}
+\mathrm{E}\left[X_1\right] \\
+\vdots \\
+\mathrm{E}\left[X_n\right]
+\end{array}\right)
+$$
+And we have
+\begin{equation}
+    \mathrm{E}\left[X_k\right]=\sum_{x_k} x_k f_{X_k}\left(x_k\right)=\sum_{x \in \Omega} x_k f_X(x)
+    \end{equation}
+    Or
+    \begin{equation}
+        \mathrm{E}\left[X_k\right]=\int_{\mathbb{R}} x_k f_{X_k}\left(x_k\right) d x_k=\int_{\mathbb{R}^n} x_k f_X(x) d x
+        \end{equation}
+        \textbf{Theorem}. Suppose $\varphi: \mathbb{R}^n \rightarrow \mathbb{R}$ is a continuous function. Then
+        $$
+        \varphi \circ X: S \rightarrow \mathbb{R}
+        $$
+        defines a scalar random variable. It is possible to prove that in this case,
+        $$
+        \mathrm{E}[\varphi \circ X]=\sum_{x \in \Omega} \varphi(x) f_X(x), \quad \text { or } \quad \mathrm{E}[\varphi \circ X]=\int_{\mathbb{R}^n} \varphi(x) f_X(x) d x
+        $$
+        For $\varphi\left(x_1, \ldots, x_n\right)=x_k$ we regain the definition of $E\left[X_k\right]$.
+
+        \subsection{Correlation between Random Variables}
+    \subsubsection{Covariance}
+    \begin{equation}
+        \operatorname{Cov}[X, Y]=\mathrm{E}\left[\left(X-\mu_X\right)\left(Y-\mu_Y\right)\right]
+        \end{equation}
+    \begin{equation}
+        \operatorname{Cov}[X, Y]=\mathrm{E}[X Y]-\mathrm{E}[X] \mathrm{E}[Y]
+        \end{equation}
+    When using this formula, we must be careful about if $X$ and $Y$ are independent.\\
+    \textbf{Theorem}. If $X$ and $Y$ are independent, then $\operatorname{Cov}[X, Y]=0$. But if $\operatorname{Cov}[X, Y]=0$, $X$ and $Y$ may still be dependent.\\
+    ~\\
+    \noindent The covariance matrix of $\boldsymbol{X}$ is given by
+    \begin{equation}
+        \operatorname{Var}[\mathbf{X}]=\left(\begin{array}{cccc}
+        \operatorname{Var}\left[X_1\right] & \operatorname{Cov}\left[X_1, X_2\right] & \cdots & \operatorname{Cov}\left[X_1, X_n\right] \\
+        \operatorname{Cov}\left[X_1, X_2\right] & \operatorname{Var}\left[X_2\right] & \ddots & \vdots \\
+        \vdots & \ddots & \ddots & \operatorname{Cov}\left[X_{n-1}, X_n\right] \\
+        \operatorname{Cov}\left[X_1, X_n\right] & \cdots & \operatorname{Cov}\left[X_{n-1}, X_n\right] & \operatorname{Var}\left[X_n\right]
+        \end{array}\right)
+        \end{equation}
+    \textbf{Theorem}. Suppose there's a linear transformation matrix $C \in \operatorname{Mat}(n \times n ; \mathrm{R})$
+    \begin{equation}
+        \operatorname{Var}[C \boldsymbol{X}]=C \operatorname{Var}[\boldsymbol{X}] C^T
+        \end{equation}
+
+
+    \subsubsection{Correlation Coefficient}
+    \begin{equation}
+        \rho(X,Y)=\operatorname{Cov}(\tilde{X},\tilde{Y})=\dfrac{\operatorname{Cov}(X,Y)}{\sigma_X \sigma_Y}=\dfrac{\operatorname{Cov}(X,Y)}{\sqrt{\operatorname{Var}[X]\operatorname{Var}[Y]}}=\dfrac{E[XY]-E[X]E[Y]}{\sqrt{(E[X^2]-E^2[X])(E[Y^2]-E^2[Y])}}
+    \end{equation}
+        It can be shown that $\rho_{X Y}$ has the following properties
+(i) $-1 \leq \rho_{X Y} \leq 1$
+(ii) $\left|\rho_{X Y}\right|=1$ if and only if there exist numbers $\beta_0, \beta_1 \in \mathbb{R}, \beta_1 \neq 0$, such that
+$$
+Y=\beta_0+\beta_1 X
+$$
+almost surely.\\
+    \textbf{Theorem} $X$ and $Y$ are deterministically linearly related if and
+    only if
+    \begin{equation}
+        \tilde{X}+\tilde{Y}=0 \quad \text { or } \quad \tilde{X}-\tilde{Y}=0
+        \end{equation}
+    And we have
+    $$
+\begin{aligned}
+& \operatorname{Var}[\tilde{X}+\tilde{Y}]=\operatorname{Var}[\tilde{X}]+\operatorname{Var}[\tilde{Y}]+2 \operatorname{Cov}[\tilde{X}, \tilde{Y}]=2+2 \varrho_{X Y} \\
+& \operatorname{Var}[\tilde{X}-\tilde{Y}]=\operatorname{Var}[\tilde{X}]+\operatorname{Var}[\tilde{Y}]-2 \operatorname{Cov}[\tilde{X}, \tilde{Y}]=2-2 \varrho_{X Y}
+\end{aligned}
+$$
+
+    \subsubsection{Fisher Transformation}
+    \begin{equation}
+        \ln \left(\sqrt{\frac{\operatorname{Var}[\tilde{X}+\tilde{Y}]}{\operatorname{Var}[\tilde{X}-\tilde{Y}]}}\right)=\frac{1}{2} \ln \left(\frac{1+\rho_{X Y}}{1-\rho_{X Y}}\right)=\operatorname{Artanh}\left(\rho_{X Y}\right) \in \mathbb{R}
+        \end{equation}
+        or
+        \begin{equation}
+            \rho_{X Y}=\tanh \left(\ln \left(\frac{\sigma_{\tilde{X}+\tilde{Y}}}{\sigma_{\widetilde{X}-\tilde{Y}}}\right)\right)
+            \end{equation}
+    If follow that if $\rho_{XY}>0$, then $X$ and $Y$ are positively correlated. If $\rho_{XY}<0$, then $X$ and $Y$ are negatively correlated.
+
+    \subsection{The Bivariate Normal Distribution}
+    \textbf{Theorem.} Let $A$ be an invertible $2 \times 2$ matrix and define $\boldsymbol{Y}=A \boldsymbol{X}$. Then the joint density of $\boldsymbol{Y}$ is given by
+$$
+f_{\boldsymbol{Y}}(y)=\frac{1}{2 \pi \sqrt{\left|\operatorname{det} \Sigma_{\boldsymbol{Y}}\right|}} e^{-\frac{1}{2}\left\langle y-\mu_{\boldsymbol{Y}}, \Sigma_{\boldsymbol{Y}}^{-1}\left(y-\mu_{\boldsymbol{Y}}\right)\right\rangle}
+$$
+where $\mu_{\boldsymbol{Y}}=\mathrm{E}[\boldsymbol{Y}], \Sigma_{\boldsymbol{Y}}=\operatorname{Var}[\boldsymbol{Y}]$ and $\langle\cdot, \cdot\rangle$ denotes the euclidean scalar product in $\mathbb{R}^2$.
+\\
+\textbf{Corollary.} It can also be expressed as 
+$$
+    f_{\boldsymbol{Y}}\left(y_1, y_2\right)=\frac{1}{2 \pi \sigma_{Y_1} \sigma_{Y_2} \sqrt{1-\varrho^2}} e^{-\frac{1}{2\left(1-\varrho^2\right)}\left[\left(\frac{y_1-\mu_{Y_1}}{\sigma_{Y_1}}\right)^2-2 \varrho\left(\frac{y_1-\mu_{Y_1}}{\sigma_{Y_1}}\right)\left(\frac{y_2-\mu_{Y_2}}{\sigma_{Y_2}}\right)+\left(\frac{y_2-\mu_{Y_2}}{\sigma_{Y_2}}\right)^2\right]}
+$$
+where $\mu_{Y_i}$ is the mean and $\sigma_{Y_i}^2$ the variance of $Y_i, i=1,2$, and $\varrho$ is the correlation of $Y_1$ and $Y_2$.
+
+
+    \subsection{The Hypergeometric Distribution}
+    \textbf{Definition}. Let $N, n, r \in \mathbb{N} \backslash\{0\}, r, n \leq N$, and $n<\min \{r, N-r\}$.
+A random variable $\left(X, f_X\right)$ with
+$$
+X: S \rightarrow \Omega=\{0, \ldots, n\}
+$$
+and density function $f_X: \Omega \rightarrow \mathbb{R}$ given by
+\begin{equation}
+f_X(x)=\dfrac{\binom{r}{x}\binom{N-r}{n-x}}{\binom{N}{n}}
+\end{equation}
+is said to have a hypergeometric distribution with parameters $N, n$ and $r$.\\
+That means, for a box containing $N$ balls, among which are $r$ red balls. The hypergeometirc distribution represent the probability of "exactly x red balls out of n selected".\\
+\noindent The hypergeometric distribution takes its name from the {hypergeometric identity}:
+\begin{equation}
+\binom{a+b}{r}=\sum_{k=0}^r\binom{a}{k}\binom{b}{r-k}=\sum_{i+j=r}\binom{a}{i}\binom{b}{j}
+\end{equation}
+Actually, this process can be segregated into several identity Bernoulli trails with $p=\dfrac{r}{N}$. So that 
+$$E[X]=\dfrac{nr}{N} \quad \operatorname{Var}[X]=n \frac{r}{N} \frac{N-r}{N} \frac{N-n}{N-1}$$
+Compare it with the variance of binomial distribution, the expression above differs by $\dfrac{N-n}{N-1}$, so when $n << N$, we can use binomial distribution to approximate the hypergeometirc distribution.\\
+\textbf{Example}. A production lot of 200 units has 8 defectives. A random sample of 10 units is selected, and we want to find the probability that the random sample will contain exactly one defective.
+We note that the sampling fraction is $n / N=10 / 200=0.05$, so we can use the binomial approximation.
+Then $p=r / N=8 / 200=0.04$ and
+$$
+P[X=1] \approx\binom{10}{1}(0.04)^1(0.96)^9=0.277
+$$
+
+
+
+
+
+
+
+
+    \section{\textsc{Transformation of Random Variables}}
+    \subsection{Genetic Method for Transformation of Random Variables}
+    
+    \subsection{Monotonic and Differentiable Function}
+    \textbf{Theorem}. Let $X$ be a continuous random variable with density $f_X$. Let $Y=\varphi \circ X$, where $\varphi: \mathbb{R} \rightarrow \mathbb{R}$ is strictly monotonic and differentiable. The density for $Y$ is then given by
+$$
+f_Y(y)=f_X\left(\varphi^{-1}(y)\right) \cdot\left|\frac{d \varphi^{-1}(y)}{d y}\right| \quad \text { for } y \in \operatorname{ran} \varphi
+$$
+and
+$$
+f_Y(y)=0 \quad \text { for } y \notin \operatorname{ran} \varphi
+$$
+
+    \subsection{Transformation of MultiVariable Random Variables}
+    \textbf{Theorem}. Let $\left(\boldsymbol{X}, f_{\boldsymbol{X}}\right)$ be a continuous multivariate random variable and let $\varphi: \mathbb{R}^n \rightarrow \mathbb{R}^n$ be a differentiable, bijective map with inverse $\varphi^{-1}$. Then $\boldsymbol{Y}=\varphi \circ \boldsymbol{X}$ is a continuous multivariate random variable with density
+$$
+f_{\boldsymbol{Y}}(\boldsymbol{y})=f_{\boldsymbol{X}} \circ \varphi^{-1}(\boldsymbol{y}) \cdot\left|\operatorname{det} D \varphi^{-1}(\boldsymbol{y})\right|,
+$$
+where $D \varphi^{-1}$ is the Jacobian of $\varphi^{-1}$.\\
+    \textbf{Example}. Let $\left((X, Y), f_{X Y}\right)$ be a continuous bivariate random variable. Let $U=X / Y$. Then the density $f_U$ of $U$ is given by
+    $$
+    f_U(u)=\int_{-\infty}^{\infty} f_{X Y}(u v, v) \cdot|v| d v .
+    $$
+    \textbf{Proof}. 
+    Consider the transformation $\varphi:(X, Y) \mapsto(U, V)$ where
+    $$
+    \varphi(x, y)=\left(\begin{array}{c}
+    x / y \\
+    y
+    \end{array}\right) .
+    $$
+    Then
+    $$
+    \varphi^{-1}(u, v)=\left(\begin{array}{c}
+    u v \\
+    v
+    \end{array}\right) .
+    $$
+We calculate
+$$
+D \varphi^{-1}(u, v)=\left(\begin{array}{ll}
+\dfrac{\partial x}{\partial u} & \dfrac{\partial x}{\partial v} \\
+\dfrac{\partial y}{\partial u} & \dfrac{\partial y}{\partial v}
+\end{array}\right)=\left(\begin{array}{ll}
+v & u \\
+0 & 1
+\end{array}\right)
+$$
+so
+$$
+\left|\operatorname{det} D \varphi^{-1}(u, v)\right|=|v|
+$$
+Then
+$$
+f_{U V}(u, v)=f_{X Y}(u v, v)|v|
+$$
+The marginal density $f_U$ is given by
+$$
+f_U(u)=\int_{-\infty}^{\infty} f_{U V}(u, v) d v=\int_{-\infty}^{\infty} f_{X Y}(u v, v) \cdot|v| d v
+$$
+
+
+    \subsection{Convolution Method}
+    The convolution of two functions $f$ and $g$ is defined by
+\begin{equation}
+(f * g)(y):=\int_{-\infty}^{\infty} f(y-x) g(x) d x .
+\end{equation}
+Let $\left(X, f_X\right)$ and $\left(Y, f_Y\right)$ be independent, continuous random variables. Then their sum $Z=X+Y$ has density $f_Z=f_X * f_Y$.
+
+
+
+
+
+
+    \section{\textsc{Reliability}}
+    \subsection{Failure Density, Reliability Function and Hazard Rate}
+    \textbf{Failure Density} represents the probability density of "the system failing at time $t$".
+    \begin{equation}
+        \begin{aligned}
+        f_A(t) & =\lim _{\Delta t \rightarrow 0} \frac{P[t \leq T \leq t+\Delta t]}{\Delta t} \\
+        & =\lim _{\Delta t \rightarrow 0} \frac{F_A(t+\Delta t)-F_A(t)}{\Delta t}
+        \end{aligned}
+        \end{equation}
+    \textbf{Reliability Function} represents the probability of "the system surviving at time $t$".
+
+    \begin{equation}
+        \begin{aligned}
+        R_A(t) =1-\int_0^t f_A(s) d s =1-F_A(t) .
+        \end{aligned}
+        \end{equation}
+    \textbf{Harzard Rate} represents the probability of that "the system failing at time $t$" under the condition of "the system surviving before $t$".
+    \begin{equation}
+        \varrho_A(t):=\lim _{\Delta t \rightarrow 0} \frac{P[t \leq T \leq t+\Delta t \mid t \leq T]}{\Delta t} = \dfrac{f_A(t)}{R_A(t)}
+        \end{equation} 
+    ~\\
+    \noindent \textbf{Theorem}. Let $X$ be a random variable with failure density $f$, reliability function $R$ and hazard rate $\varrho$. Then
+    \begin{equation}
+        R(t)=e^{-\int_0^t \varrho(x) d x}
+    \end{equation}
+
+    \subsection{The Weibull Density and Weibull Random Variable}
+    One hazard function in widespread use is the function
+    $$
+\varrho(t)=\alpha \beta t^{\beta-1}, \quad t>0, \quad \alpha, \beta>0
+$$
+    The reliability function is then given by
+    \begin{equation}
+        R(t)=e^{-\int_0^t \alpha \beta x^{\beta-1} d x}=e^{-\alpha t^\beta}
+        \end{equation}
+    And the failure density is given by
+    \begin{equation}
+        f(t)=\varrho(t) R(t)=\alpha \beta t^{\beta-1} e^{-\alpha t^\beta}
+        \end{equation}
+        \noindent \textbf{Definition}. A random variable $\left(X, f_X\right)$ is said to have a Weibull distribution with parameters $\alpha$ and $\beta$ if its density is given by
+        $$
+        f(x)=\left\{\begin{array}{ll}
+        \alpha \beta x^{\beta-1} e^{-\alpha x^\beta}, & x>0, \\
+        0, & \text { otherwise },
+        \end{array} \quad \alpha, \beta>0\right.
+        $$
+
+        \noindent \textbf{Theorem}. Let $X$ be a Weibull random variable with parameters $\alpha$ and $\beta$. The mean and variance of $X$ are given by
+        $$
+        \mu=\alpha^{-1 / \beta} \Gamma(1+1 / \beta)
+        $$
+        and
+        $$
+        \sigma^2=\alpha^{-2 / \beta} \Gamma(1+2 / \beta)-\mu^2
+        $$
+    
+        \subsection{Series and Parallel Configuration}
+        For systems with series configuration, the reliability function is
+        \begin{equation}
+            R_{\text {series }}(t)=P[\text {no component fails before } t]=\prod_{i=1}^k R_i(t)
+            \end{equation}
+        For systems with parallel configuration, the reliability function is
+        \begin{equation}
+            \begin{aligned}
+            R_{\text {parallel }}(t) & =1-P[\text { all components fail before } t] \\
+            & =1-\prod_{i=1}^k\left(1-R_i(t)\right)
+            \end{aligned}
+            \end{equation}
+        For a combinational system with the configuration ``''$A$ || ($B$ + $C$)" we have
+        $$R_{general}(t)=1-(1-R_{A}(t))(1-R_{BC}(t))=1-(1-R_A(t))(1-R_B(t)R_C(t))$$
+
+
+    \section{Limit Theories for Probability}
+    \subsection{The Chebyshev Inequality}
+    Let $c>0$ be any real number. Then
+$$
+\begin{aligned}
+\mathrm{E}\left[X^2\right] & =\int_{-\infty}^{\infty} x^2 f_X(x) d x \geq \int_{|x| \geq c} x^2 f_X(x) d x \\
+& \geq c^2 \int_{|x| \geq c} f_X(x) d x \\
+& =c^2 \cdot P[|X| \geq c]
+\end{aligned}
+$$
+More generally, for $k \in \mathbb{N} \backslash\{0\}$,
+\begin{equation}
+P[|X| \geq c] \leq \frac{\mathrm{E}\left[|X|^k\right]}{c^k}
+\end{equation}
+
+
+\subsection{Central Limit Theorem}
+\textbf{Central Limit Theorem}. Let $\left(X_i\right)$ be a sequence of independent, but not necessarily identical random variables whose third moments exist and satisfy a certain technical condition.
+Let
+$$
+Y_n=X_1+\cdots+X_n
+$$
+Then for any $z \in \mathbb{R}$,
+\begin{equation}
+P\left[\frac{Y_n-E\left[Y_n\right]}{\sqrt{\operatorname{Var}\left[Y_n\right]}} \leq z\right] \stackrel{n \rightarrow \infty}{\longrightarrow} \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^z e^{-x^2 / 2} d x
+\end{equation}
+\textbf{Approximate to Normal Distribution.} Suppose $S_n=X_1+...+X_n$, where $X_i$ are a sequence of i.i.d. random vairables with mean value $\mu$ and variance $\sigma^2$. If $n$ is sufficiently large, the probability $P[S_n \leq c]$ can be approximately calculated by regarding it as normal distribution:\\
+(1) Calculate the mean value $n\mu$ and the variance $n\sigma^2$;\\
+(2) Calculate the normalized value $z=\dfrac{c-n\mu}{\sqrt{n}\sigma}$;\\
+(3) Calculate the approximate value $P(S_n\leq c) \approx \Phi(z) $.
+
+
+\subsection{The Weak Law of Large Numbers}
+\textbf{Theorem.} Let $X_1, X_2, X_3, \ldots$ be a sequence of
+i.i.d. random variables with mean $\mu$ and variance $\sigma^2$. Then for any $\varepsilon>0$,
+\begin{equation}
+    P\left[\left|\frac{X_1+\cdots+X_n}{n}-\mu\right| \geq \varepsilon\right] \stackrel{n \rightarrow \infty}{\longrightarrow} 0
+\end{equation}
+
+\section{Sampling and Data Visualization}
+\subsection{Sample Size}
+    Sample size $n$ should not be larget than $5\%$ of the population size.\\
+    The large sample has not only yielded a result that is different from
+the true proportion (that is to be expected in statistics), it has also
+perturbed the distribution of the remaining population.
+\subsection{Quartiles}
+Suppose that our list of $n$ data has been ordered from smallest to largest, so that
+$$
+x_1 \leq x_2 \leq x_3 \leq \cdots \leq x_n
+$$
+Then the median is given by
+$$
+q_2= \begin{cases}x_{(n+1) / 2} & \text { if } n \text { is odd } \\ \frac{1}{2}\left(x_{n / 2}+x_{n / 2+1}\right) & \text { if } n \text { is even }\end{cases}
+$$
+
+\subsection{Histograms and Category Width}
+    The number of categories can be typically defined based on Sturges's rule, i.e.,
+    \begin{equation}
+    k=\left\lceil\log _2(n)\right\rceil+1
+    \end{equation}
+    The precision of the data $\left\{x_1, \ldots, x_n\right\}$ is the smallest decimal place of the values $x_i$.
+The sample range is given by
+$$
+\max _{1 \leq i \leq n}\left\{x_i\right\}-\min _{1 \leq i \leq n}\left\{x_i\right\}
+$$
+If the number of bins $k$ has been determined (e.g., by Sturges's rule), then the bin width is calculated as
+\begin{equation}
+h=\frac{\max \left\{x_i\right\}-\min \left\{x_i\right\}}{k}
+\end{equation}
+According to Freedman and Diaconis, numerical calculations show that
+\begin{equation}
+h=\frac{2 \cdot \mathrm{\operatorname{IQR}}}{\sqrt[3]{n}}
+\end{equation}
+Where $\mathrm{IQR}$ is a measure of dispersion of the data, which is defined as
+\begin{equation}
+\mathrm{IQR}=q_3-q_1
+\end{equation}
+
+\subsubsection{Describe a Histogram}
+\begin{figure}[h] 
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/histogram.png} 
+    \caption{Different shapes of histograms.} 
+\end{figure}
+\noindent Description:\\
+This histogram has a unimodal shape (1/2 Mark) which is consistent with a normal distribution. It is not significantly skewed, (1/2 Mark) again consistent with a normal distribution. Therefore, there is no evidence that the data does not come from a normal distribution.
+
+
+
+\subsection{Boxplots}
+We define the \textbf{inner fences} $f_1$ and $f_3$ using the interquartile range as follows:
+\begin{equation}
+f_1=q_1-\frac{3}{2} \mathrm{IQR}, \quad f_3=q_3+\frac{3}{2} \mathrm{IQR}
+\end{equation}
+The \textbf{whiskers} (lines extending to the left and right of the box) end at the adjacent values
+\begin{equation}
+a_1=\min \left\{x_k: x_k \geq f_1\right\}, \quad a_3=\max \left\{x_k: x_k \leq f_3\right\}
+\end{equation}
+We define the \textbf{outer fences}
+\begin{equation}
+F_1=q_1-3 \mathrm{IQR}, \quad F_3=q_3+3 \mathrm{IQR} .
+\end{equation}
+Measurements $x_k$ that lie outside the inner fences but inside the outer fences are called \textbf{near outliers}. Those outside the outer fences are known as \textbf{far outliers}.\\
+
+\noindent Boxplot of normal distribution has following traits:\\
+(1) A symmetric median line in the middle of the box;\\
+(2) Equally long whiskers;\\
+(3) Very few near outliers and no far outliers.\\
+\begin{figure}[h] 
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/boxplot2.png} 
+    \caption{Boxplot of normal distribution.} 
+\end{figure}
+
+\begin{figure}[h] 
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/boxplot1.png} 
+    \caption{Boxplot of uniform distribution.} 
+\end{figure}
+
+\begin{figure}[h] 
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/boxplot3.png} 
+    \caption{Boxplot of Cauchy distribution.} 
+\end{figure}
+
+
+\begin{figure}[!h] 
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/boxplot4.png} 
+    \caption{Boxplot of Gamma distribution.} 
+\end{figure}
+
+\noindent Description:\\
+The whiskers are moderately asymmetric (1/2 Mark) but the median line is not too far from the center of the box, (1/2 Mark). There is no outlier, (1/2 Mark) and in summary no strong evidence that the data does not come from a normal distribution. (1/2 Mark)
+
+\section{Point Estimation}
+\subsection{Sample Mean and Sample Variance}
+\textbf{Definition}. The difference
+$$
+\theta-\mathrm{E}[\hat{\theta}]
+$$
+is called the bias of an estimator $\hat{\theta}$ for a population parameter $\theta$. If $\mathrm{E}[\widehat{\theta}]=\theta$, we say that $\widehat{\theta}$ is unbiased.
+The mean square error of $\hat{\theta}$ is defined as
+$$
+\operatorname{MSE}[\widehat{\theta}]:=\mathrm{E}\left[(\widehat{\theta}-\theta)^2\right]
+$$
+And we have
+\begin{equation}
+    \begin{aligned}
+    \operatorname{MSE}[\widehat{\theta}] & =\mathrm{E}\left[(\widehat{\theta}-\mathrm{E}[\widehat{\theta}])^2\right]+(\theta-\mathrm{E}[\widehat{\theta}])^2 \\
+    & =\operatorname{Var}[\widehat{\theta}]+(\text {bias})^2 .
+    \end{aligned}
+    \end{equation}
+\textbf{Estimator of Mean Value}. Let $X_1, \ldots, X_n$ be a random sample of size $n$ from a distribution with mean $\mu$. The sample mean $\bar{X}$ is an unbiased estimator for $\mu$\\
+\textbf{Standard Deviation}. The standard deviation of $\bar{X}$ is given by $\sqrt{\operatorname{Var}[\bar{X}]}=\sigma / \sqrt{n}$ and is called the standard error of the mean.\\
+\textbf{Unbiased Estimator of Variance.}
+\begin{equation}
+    S^2:=\frac{1}{n-1} \sum_{k=1}^n\left(X_k-\bar{X}\right)^2 .
+    \end{equation}
+
+\subsection{Estimator of Moments}
+\textbf{Estimator of Moments}. Given a random sample $X_1, \ldots, X_n$ of a random variable $X$, for any integer $k \geq 1$,
+\begin{equation}
+\widehat{\mathrm{E}\left[X^k\right]}=\frac{1}{n} \sum_{i=1}^n X_i^k
+\end{equation}
+is an unbiased estimator for the $k$-th moment of $X$. \\
+Usually, by calculating $E[X]$ we can get a function w.r.t $\theta$, then we only need to solve the equation
+$$
+f(\bar{\theta}) = \frac{1}{n} \sum_{i=1}^n X_i^k.
+$$
+
+\subsection{Method of Maximum Likelihood}
+Let $X_\theta$ be a random variable with parameter $\theta$ and density $f_{X_\theta}$. Given a random sample $\left(X_1, \ldots, X_n\right)$ that yielded values $\left(x_1, \ldots, x_n\right)$ we define the likelihood function $L$ by
+\begin{equation}
+L(\theta)=\prod_{i=1}^n f_{X_\theta}\left(x_i\right)
+\end{equation}
+We then maximize $L(\theta)$. The location of the maximum is then chosen to be the estimator $\hat{\theta}$.\\
+\textbf{Example.} Suppose it is known that $X$ follows a Poisson distribution with parameter $k$ and we wish to estimate $k$.
+The density for $X$ is given by $f_k(x)=\dfrac{e^{-k} k^x}{x !}, x \in \mathbb{N}$. Given a random sample $X_1, \ldots, X_n$ the likelihood function is
+$$
+L(k)=\prod_{i=1}^n f_k\left(x_i\right)=e^{-n k} \dfrac{k \sum x_i}{\prod x_{i} !} .
+$$
+To simplify our calculations, we take the logarithm:
+$$
+\ln L(k)=-n k+\ln k \sum_{i=1}^n x_i-\ln \prod x_{i} !
+$$
+Maximizing $\ln L(k)$ will also maximize $L(k)$. 
+We take the first derivative and set it equal to zero:
+$$
+\frac{d \ln L(k)}{d k}=-n+\frac{1}{k} \sum_{i=1}^n x_i=0
+$$
+so we find
+$$
+\widehat{k}=\bar{x}
+$$
+
+
+
+\subsection{Independance of Sample Mean and Sample Variance}
+\textbf{Theorem}. Let $X_1, \ldots, X_n, n \geq 2$, be a random sample of size $n$ from a normal distribution with mean $\mu$ and variance $\sigma^2$. Then\\
+(i) The sample mean $\bar{X}$ is independent of the sample variance $S^2$,\\
+(ii) $\bar{X}$ is normally distributed with mean $\mu$ and variance $\sigma^2 / n$,\\
+(iii) $(n-1) S^2 / \sigma^2$ is chi-squared distributed with $n-1$ degrees of freedom.\\
+\textbf{The Helmert Transformation.} A sample of size $n$ taken from a normal population $X$ with mean $\mu$ and variance $\sigma^2$ is transformed as follows:
+$$
+\begin{aligned}
+Y_1 & =\frac{1}{\sqrt{n}}\left(X_1+\cdots+X_n\right) \\
+Y_2 & =\frac{1}{\sqrt{2}}\left(X_1-X_2\right) \\
+Y_3 & =\frac{1}{\sqrt{6}}\left(X_1+X_2-2 X_3\right) \\
+\vdots & \\
+Y_n & =\frac{1}{\sqrt{n(n-1)}}\left(X_1+X_2+\cdots+X_{n-1}-(n-1) X_n\right)
+\end{aligned}
+$$
+Then, $Y_1, Y_2,...,Y_n$ are independent and normally distributed. The random variable $Y_1$ is normally distributed with mean $\sqrt{n}\mu$ and variance $\sigma^2$ and $Y_2, Y_3,...,Y_n$ have mean $0$ and variance $\sigma^2$.
+.
+
+
+\section{Confidence Interval}
+\subsection{Interval Estimation for $\mu$ with Known $\sigma^2$ }
+A $95\%$ confidence interval does not mean that "the probability of the parameter $\theta$ locating in the interval is $95\%$. Instead, it means "if we samples and calculate a $95\%$ confidence interval, then the probability that the interval contains $\theta$ is $95\%$". 
+Do remember that $L_1$ and $L_2$ are functions based on our observation, which means they are random variables. So $[L_1,L_2]$ is a random interval.\\
+~\\
+\textbf{Theorem}. Let $X_1, \ldots, X_n$ be a random sample of size $n$ from a normal distribution with mean $\mu$ and variance $\sigma^2$. A $100(1-\alpha) \%$ confidence interval on $\mu$ is given by
+\begin{equation}
+\bar{X} \pm \dfrac{z_{\alpha / 2} \cdot \sigma}{\sqrt{n}}
+\end{equation}
+where $z_{\alpha/2}$ satisfies the equation
+\begin{equation}
+    \alpha / 2=P\left[Z \geq z_{\alpha / 2}\right]=\frac{1}{\sqrt{2 \pi}} \int_{z_{\alpha / 2}}^{\infty} e^{-x^2 / 2} d x
+    \end{equation}
+\textbf{Theorem}. Let $X_1, \ldots, X_n$ be a random sample of size $n$ from a normal distribution with mean $\mu$ and variance $\sigma^2$.\\
+(i) A $100(1-\alpha) \%$ upper confidence bound on $\mu$ is given by $\bar{X}+\dfrac{z_\alpha \cdot \sigma}{\sqrt{n}}$.\\
+(ii) A $100(1-\alpha) \%$ lower confidence bound on $\mu$ is given by $\bar{X}-\dfrac{z_\alpha \cdot \sigma}{\sqrt{n}}$.\\
+\textbf{Theorem.} Let $X_1, \ldots, X_n, n \geq 2$, be i.i.d. random variables. Then if $\bar{X}$ and $S^2$ are independent, the $X_k, k=1, \ldots, n$ follow a normal distribution.\\
+
+
+\subsection{Interval Estimation for $\sigma^2$ with Unknown $\mu$ }
+\textbf{Theorem}. Let $X_1, \ldots, X_n, n \geq 2$, be a random sample of size $n$ from a normal distribution with mean $\mu$ and variance $\sigma^2$. A $100(1-\alpha) \%$ confidence interval on $\sigma^2$ is given by
+\begin{equation}
+\left[\dfrac{(n-1) S^2}{ \chi_{\alpha / 2, n-1}^2},\dfrac{(n-1) S^2}{\chi_{1-\alpha / 2, n-1}^2} \right]
+\end{equation}
+Given $\alpha \in[0,1]$ and $\gamma>0$ we define $\chi_{1-\alpha / 2, \gamma}^2, \chi_{\alpha / 2, \gamma}^2 \in[0, \infty)$ by
+\begin{equation}
+\int_0^{\chi_{1-\alpha / 2, \gamma}^2} f_{\chi_\gamma^2}(x) d x=\int_{\chi_{\alpha / 2, \gamma}^2}^{\infty} f_{\chi_\gamma^2}(x) d x=\alpha / 2
+\end{equation}
+\begin{figure}[!h] 
+    \centering
+    \includegraphics[width=0.6\textwidth]{figures/ChiSquared.png} 
+    \caption{Chi-squared distribution in interval estimation}
+\end{figure}
+\textbf{Theorem}. Let $X_1
+, \ldots, X_n, n \geq 2$, be a random sample of size $n$ from a normal distribution with mean $\mu$ and variance $\sigma^2$. Then with $100(1-\alpha) \%$ confidence
+$$
+\sigma^2 \leq \dfrac{(n-1) S^2}{\chi_{1-\alpha, n-1}^2}
+$$
+and $\left[0, \dfrac{(n-1) S^2}{\chi_{1-\alpha, n-1}^2}\right]$ is a $100(1-\alpha) \%$ upper confidence interval for $\sigma^2$.
+Similarly, with $100(1-\alpha) \%$ confidence
+$$
+\frac{(n-1) S^2}{\chi_{\alpha, n-1}^2} \leq \sigma^2
+$$
+and $\left[\dfrac{(n-1) S^2}{\chi_{\alpha, n-1}^2}, \infty\right)$ is a $100(1-\alpha) \%$ lower confidence interval for $\sigma^2$
+
+
+
+\subsection{$T$-Distribution}
+\textbf{Definition}. Let $Z$ be a standard normal variable and let $\chi_\gamma^2$ be an independent chi-squared random variable with $\gamma$ degrees of freedom. The random variable
+\begin{equation}
+T_\gamma=\frac{Z}{\sqrt{\chi_\gamma^2 / \gamma}}
+\end{equation}
+is said to follow a $T$-distribution with $\gamma$ degrees of freedom.\\
+\textbf{Theorem}. The density of a $T$ distribution with $\gamma$ degrees of freedom is given by
+\begin{equation}
+f_{T_\gamma}(t)=\frac{\Gamma((\gamma+1) / 2)}{\Gamma(\gamma / 2) \sqrt{\pi \gamma}}\left(1+\frac{t^2}{\gamma}\right)^{-\frac{\gamma+1}{2}}
+\end{equation}
+As the degree of freedom $\gamma$ increases, $T$-distribution will approach normal distribution.\\
+One intuitive reason that the T-distribution approaches the normal distribution as the degrees of freedom increases is that when the sample size $n$ grows larger, the estimate for the sample variance improves, so that $S^2$ is likely to be closer to $\sigma^2$.
+
+\subsubsection{Interval Estimation for $\mu$ with Unknown Variance}
+\textbf{Theorem}. Let $X_1, \ldots, X_n$ be a random sample of size $n$ from a normal distribution with mean $\mu$ and variance $\sigma^2$. Then a $100(1-\alpha) \%$ confidence interval on $\mu$ is given by
+\begin{equation}
+\bar{X} \pm t_{\alpha / 2, n-1} S / \sqrt{n}
+\end{equation}
+where $t_{\alpha / 2, \gamma}$ are defined by
+$$
+\int_{t_{\alpha / 2, \gamma}}^{\infty} f_{T_\gamma}(t) d t=\alpha / 2
+$$
+\textbf{Example}. An article in the Journal of Testing and Evaluation presents the following 20 measurements on residual flame time (in seconds) of treated specimens of children's nightwear:
+$$
+\begin{array}{llllllllll}
+9.85 & 9.93 & 9.75 & 9.77 & 9.67 & 9.87 & 9.67 & 9.94 & 9.85 & 9.75 \\
+9.83 & 9.92 & 9.74 & 9.99 & 9.88 & 9.95 & 9.95 & 9.93 & 9.92 & 9.89
+\end{array}
+$$
+We wish to find a $95 \%$ confidence interval on the mean residual flame time. The sample mean and standard deviation are
+$$
+\bar{x}=9.8525, \quad s=0.0965
+$$
+We refer to the table for the $T$ distribution with $20-1=19$ degrees of freedom and and $\alpha / 2=0.025$ to obtain $t_{0.025,19}=2.093$. Hence we are $95 \%$ certain that
+$$
+\mu=(9.8525 \pm 0.0451) \sec
+$$
+\textbf{Example.} The proportion of color blind individuals in a population is to be estimated. Suppose the sample percentage of color blind individuals is $30\%$. Now we are able to get a $95\%$ confidence interval with the true percentage deviating less than $3.1\%$ points from the sample percentage. What would have been minimum sample size n to obtain this estimate?\\
+We know that $\bar{X}=0.3$, sample standard deviation $S=\sqrt{0.3*0.7}$. So half of the length of confidence interval is 
+$$\dfrac{t_{\alpha / 2, n-1}\cdot S}{\sqrt{n}} \leq 0.031$$
+By using ``InverseCDF'' function in MMA, we can get $n \geq 842$.
+
+
+
+
+
+
+
+\section{Hypotheses Testing}
+Our goal is to find statistical evidence that allows us to reject the null
+hypothesis. The process of using statistical data to decide whether or not a hypothesis
+should be \textbf{rejected} is called ``performing a hypothesis test”.
+
+\subsection{Fisher's Null Hypothesis Test}
+The $P$-value is an upper bound of the probability of obtaining the data if $H_0$ is true. If $D$ represents the statistical data. Suppose that $H_0: \theta \leq \theta_0$
+\begin{equation}
+P[D \mid H_0] = P[D \mid \theta \leq \theta_0] \leq  P[D \mid \theta =\theta_0] = P \text {-value }
+\end{equation}
+and we will reject $H_0$ if this value is small, and we say \textbf{we reject $H_0$ by at the [$P$-value] level of significance}.\\
+\textbf{Example}. We take a sample of 36 cars and find their gas mileages. We decide to base our rejection of $H_0$ on the sample mean.
+If $\mu=26$ and $\sigma=5$, the sample mean is normally distributed with $\mu=26$ and standard deviation $\sigma / \sqrt{n}=5 / 6$.
+Suppose that we find a sample mean $\bar{x}=28.04 \mathrm{mpg}$.
+We now calculate the $P$-value of the test, i.e., the probability of obtaining this or a larger value of the sample mean if $H_0$ were true.
+$$
+\begin{aligned}
+P[\bar{X} \geq 28.04 \mid \mu \leq 26, \sigma=5] & \leq P[\bar{X} \geq 28.04 \mid \mu=26, \sigma=5] \\
+& =P\left[\frac{\bar{X}-26}{5 / 6} \geq \frac{28.04-26}{5 / 6}\right] \\
+& =P[Z \geq 2.45]=1-P[Z \leq 2.45] \\
+& =1-0.9929=0.0071 .
+\end{aligned}
+$$
+This is the $P$-value of the test. Since it is very small, we decide to reject the null hypothesis at the $0.7 \%$ level of significance.\\
+~\\
+\noindent\textbf{Explanation.} However, if $H_0$ is rejected, it's still possible that $H_0$ is true, since we only calculate $P[D\mid H_0]$ but what's more meaningful is the probability $P[H_0\mid D]$. Instead, what Fisher Test can tell us is that: if $H_0$ is true, then there's at least [$P$-value] probability that $\bar{X}$ is equal or larger than the sample size $\bar{x}$. 
+
+
+\subsection{Neyman-Pearson Decision Theory}
+We don't need evidence that $H_0$ or $H_1$ is true. Instead, we act by assuming that $H_0$ or $H_1$ is true.\\
+The statistical test will end with either\\
+(1) Failing to reject $H_0$, therefore accepting $H_0$ or\\
+(2) Rejecting $H_0$, thereby accepting $H_1$.\\
+If we accept $H_0$, we do not necessarily believe $H_0$ to be true; we simply decide to act as if it were true. The same is the case if we decide to accept $H_1$; we are not necessarily convinced that $H_1$ is true, we merely decide to assume that it is.\\
+We define the probability of committing a \textbf{Type I error},
+$$
+\begin{aligned}
+\alpha & :=P[\text { Type I error }]=P\left[\text { reject } H_0 \mid H_0 \text { true }\right] \\
+& =P\left[\text { accept } H_1 \mid H_0 \text { true }\right] .
+\end{aligned}
+$$
+The probability of committing a \textbf{Type II error} is denoted
+$$
+\begin{aligned}
+\beta & :=P[\text { Type II error }]=P\left[\text { fail to reject } H_0 \mid H_1 \text { true }\right] \\
+& =P\left[\text { accept } H_0 \mid H_1 \text { true }\right] .
+\end{aligned}
+$$
+Related to $\beta$ is the power of the test, defined as
+$$
+\begin{aligned}
+\text { Power }: & =1-\beta=P\left[\text { reject } H_0 \mid H_1 \text { true }\right] \\
+& =P \left[\text { accept } H_1 \mid H_1 \text { true }\right] .
+\end{aligned}
+$$
+\subsubsection{$\alpha$ and Critical Region}
+A \textbf{Critical Region} is that, if the data falls in that region, we can conclude that the type I error would be small, which means $H_0$ is probably wrong. \textbf{In order for the statistical procedure to be valid, the critical region must be fixed before data are obtained.}\\
+With the fixed sample size $n$, the critical region is given by
+\begin{equation}
+    \bar{x} \notin [\mu_0 - z_{\alpha / 2} \frac{\sigma}{\sqrt{n}}, \mu_0 + z_{\alpha / 2} \frac{\sigma}{\sqrt{n}}]
+\end{equation}
+If $H_0$ is a one-sided hypothesis, then the critical region will be 
+\begin{equation}
+    \bar{x} \geq \mu_0 + z_{\alpha} \frac{\sigma}{\sqrt{n}} \quad \text{or} \quad \bar{x} \leq \mu_0 - z_{\alpha} \frac{\sigma}{\sqrt{n}}
+\end{equation}
+In this scheme, The decision whether to reject $H_0$ or not is not driven by the probability of $H_0$ being true or not, but solely by the probability of committing an error if H0 is falsely rejected.
+
+\subsubsection{$\beta$ and Sample Size}
+With fixed critical region, we can only adjust the sample size $n$ to make $\beta$ as small as possible.\\
+\begin{figure}[!h] 
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/beta_sample_size.png} 
+\end{figure}
+Based on the curves in the figures, we can see $\beta$ is equal to the area on the interval $ [\mu_0 - z_{\alpha / 2} \dfrac{\sigma}{\sqrt{n}}, \mu_0 + z_{\alpha / 2} \dfrac{\sigma}{\sqrt{n}}]$.
+When $\mu = \mu_0 + \delta$, by normalizing it with $\dfrac{(t-\mu_0)\sqrt{n}}{\sigma}$, we have
+$$
+    P[\text{fail to reject } H_0 \mid \mu=\mu_0+\delta]=\frac{1}{\sqrt{2 \pi}} \int_{-z_{\alpha / 2}}^{z_{\alpha / 2}} e^{-(t-\delta \sqrt{n} / \sigma)^2 / 2} d t \approx \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{z_{\alpha / 2}-\delta \sqrt{n} / \sigma} e^{-t^2 / 2} d t
+$$
+From the figure, we know that a smaller $\delta$ will yield a larger $\beta$, and the upper bound is taken at $\delta_0$:
+$$
+\frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{z_{\alpha / 2}-\delta \sqrt{n} / \sigma} e^{-t^2 / 2} d t \leq \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{z_{\alpha / 2}-\delta_0 \sqrt{n} / \sigma} e^{-t^2 / 2} d t \approx \beta
+$$
+While also we have
+$$
+    \beta=\frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{-z_\beta} e^{-t^2 / 2} d t
+$$
+Then according to the equations above, we get 
+\begin{equation}
+    n \approx \frac{\left(z_{\alpha / 2}+z_\beta\right)^2 \sigma^2}{\delta_0^2}
+    \end{equation}
+Or if $H_0$ is a one-sided hypothesis, we have
+\begin{equation}
+    n \approx \frac{\left(z_{\alpha }+z_\beta\right)^2 \sigma^2}{\delta_0^2}
+    \end{equation}
+\textbf{Remark 1.} Actually, only after $n$ is determined can we calculate the critical region.\\
+\textbf{Remark 2.} In Neyman-Pearson test, we should not let $H_0$ and $H_1$ oppose to each other completely. That's because, if $\delta_0 \rightarrow 0$, it's obvious that we should have an extremely large $n$ to acquire a small $\beta$. What's worse, when $\delta_0=0$, the two curves shown in the above figure will overlap and $\beta = 1-\alpha$. That is nonsense.
+
+
+
+
+\subsubsection{Operating Characteristic Curves (OC Curves)}
+OC curves can describe the relationship between $\beta(\mu)$ and $\mu$. \textbf{Do notice that it's not the same as the shape of normal distribution.}
+\begin{figure}[!h] 
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/OC_curve.png} 
+\end{figure}
+For different values of $\alpha$, the curve will scale correspondingly; if the sample size $n$ gets larger, the curve will be more narrow but have the same maximum point $(\mu_0, 1-\alpha)$.\\
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{figures/OC_curve_2.png} 
+\end{figure}
+In the second graph, $d$ is defined as 
+\begin{equation}
+d:=\dfrac{|\mu-\mu_0|}{\sigma}
+\end{equation}
+Then the OC curve can give us two aspects of information:\\
+(1) Given the sample size $n$, we can easily read the value $\beta(\mu)$.\\
+(2) Given $\beta$ and $H_1: \mu \geq \mu_0 + \delta+0$, we can draw a horizontal line $y=\beta$ and the box $x\geq d_0 = \dfrac{\delta_0}{\sigma}$. Then by choosing a curve that lies under $y=\beta$ when $x=\dfrac{\delta_0}{\sigma}$, we can select a reasonable sample size $n$.
+\subsubsection{Steps of Neyman-Pearson Hypothesis Testing}
+(i) Select appropriate hypotheses $H_1$ and $H_0$ and a test statistic;\\
+(ii) Fix $\alpha$ and $\beta$ for the test;\\
+(iii) Use $\alpha$ and $\beta$ to determine the appropriate the sample size;\\
+(iv) Use $\alpha$ and the sample size to determine the critical region;\\
+(v) Obtain the sample statistic; if the test statistic falls into the critical region, reject $H_0$ at significance level $\alpha$ and accept $H_1$. Otherwise, accept $\mathrm{H}_0$.
+
+\subsection{Null Hypothesis Significance Testing}
+To be probabilistically pure in the NHST sense, an experiment should be run once, and if the null hypothesis is not rejected, it should not be repeated.
+
+
+\section{Single Sample Test for the Mean and Variance}
+\subsection{The $T$-Test for $\mu$}
+Any test based on the statistic
+\begin{equation}
+T_{n-1}=\frac{\bar{X}-\mu_0}{S / \sqrt{n}}
+\end{equation}
+is called a T-test.\\
+We reject at significance level $\alpha$
+$$H_0: \mu=\mu_0 \text{ if } \left|T_{n-1}\right|>t_{\alpha / 2, n-1}$$
+$$H_0: \mu \leq \mu_0 \text{ if } T_{n-1}>t_{\alpha, n-1}$$
+$$H_0: \mu \geq \mu_0 \text{ if } T_{n-1}<-t_{\alpha, n-1}$$
+\textbf{The $T$-test based on OC curves.} Here we use use sample standard deviation $s$ to replace $\sigma$. 
+\begin{equation}
+    d:=\dfrac{|\mu-\mu_0|}{s}
+\end{equation}
+
+\subsection{The Chi-Squared Test for $\sigma$}
+Let $X_1, \ldots, X_n$ be a random sample of size $n$ from a normal distribution and let $S^2$ denote the sample variance. Let $\sigma^2$ be the unknown population variance and $\sigma_0^2$ a null value of that variance. Then a test for the variance based on the statistic
+\begin{equation}
+\chi_{n-1}^2=\frac{(n-1) S^2}{\sigma_0^2}
+\end{equation}
+is called a chi-squared test. \\
+We reject at significance level $\alpha$
+$$H_0: \sigma=\sigma_0 \text{ if } \chi_{n-1}^2>\chi_{\alpha / 2, n-1}^2\text{ or } \chi_{n-1}^2<\chi_{1-\alpha / 2, n-1}^2$$
+$$H_0: \sigma \leq \sigma_0\text{ if }\chi_{n-1}^2>\chi_{\alpha, n-1}^2$$
+$$H_0: \sigma \geq \sigma_0\text{ if }\chi_{n-1}^2<\chi_{1-\alpha, n-1}^2$$
+\textbf{The Chi-squared test based on OC curves.} Here we define the abscissa parameter for the two-tailed chi-squared test is 
+\begin{equation}
+    \lambda = \dfrac{\sigma}{\sigma_0}
+\end{equation}
+\textbf{Example.} Returning to Example 19.5 , the engineers concerned are dissatisfied that $H_0$ was not rejected. A second test (this time of Neyman-Pearson type) is to be performed to establish that the standard deviation is less than $\sigma_0=1.5 \mathrm{~mm}$.\\
+1. If we want to preset $\alpha=0.05$, what is the critical region for the test at a sample size $n=20$ ?\\
+2. If $n=20$, what true value of $\sigma$ is necessary so that the test will have a power of $1-\beta=0.9$ ?\\
+3. For $\alpha=0.05$, make a statement on the sample size necessary to ensure that $H_0$ is rejected with $90 \%$ probability if $\sigma=1.35$.\\
+\textbf{Solution.} 1. From the table for the $\chi_{19}^2$ distribution we see that $P\left[\chi_{1-0.05,19}^2 \leq 10.1\right]=0.05$, so the critical region for the variance is
+$$
+\frac{(n-1) s^2}{\sigma_0^2}<10.1 \quad \Leftrightarrow \quad s^2<\frac{2.25 \cdot 10.1}{19}=1.20
+$$
+i.e., $s<1.09$.\\
+2. For $n=20$, the line intersects the horizontal rule $\beta=0.1$ at $\lambda=0.6$. This means that
+$$
+\sigma<0.6 \sigma_0=0.9
+$$
+is necessary for $H_0$ to be rejected $90 \%$ of the time.\\
+3. We take $y=1-\beta=0.1$ and $x=\lambda=\dfrac{\sigma}{\sigma_0}=\dfrac{1.35}{1.50}=0.9$, then the graph shows that a sample size significantly larger than $n=100$ would be necessary.
+
+
+\section{Non-Parametric Single Sample Test for the Median}
+A non-parametric test should follow two basic rules:\\
+(1) Non-parametric statistics do not assume the dependence on any parameter.\\
+(2) Distribution-free statistics do not assume that X follows any particular distribution (such as the normal distribution).
+\subsection{Sign Test for the Median}
+The median of a random variable $X$ is defined as the value $M$ such that
+\begin{equation}
+P[X<M]+\frac{1}{2} P[X=M]=\frac{1}{2} \quad \text{or} \quad P[X>M]+\frac{1}{2} P[X=M]=\frac{1}{2}
+\end{equation}
+Given a sample $X_1, \ldots, X_n$, define
+$$
+Q_{+}=\#\left\{X_k: X_k-M_0>0\right\}, \quad Q_{-}=\#\left\{X_k: X_k-M_0<0\right\}
+$$
+So $Q_{+}$is the number of "positive signs" and $Q_{-}$the number of "negative signs." We note that
+$$
+P\left[Q_{-} \leq k \mid M=M_0\right]=\sum_{x=0}^k \binom{n}{x} \frac{1}{2^n}
+$$
+We reject at significance level $\alpha$
+$$H_0: M \leq M_0\text{ if }P\left[Q_{-} \leq k \mid M=M_0\right]<\alpha$$
+$$H_0: M \geq M_0\text{ if }P\left[Q_{+} \leq k \mid M=M_0\right]<\alpha$$
+\textbf{Example}. A certain six-sided die is suspected of being unbalanced. Based on past experience, it is suspected that the median is greater than 3.5. We decide to test the null hypothesis
+$$
+H_0: M \leq 3.5 .
+$$
+We note that there are 6 negative signs,
+$$
+Q_{-}=6 \text {. }
+$$
+By rolling the dice for 20 times, we then find that
+$$
+P\left[Q_{-} \leq 6 \mid M=3.5\right]=\frac{1}{2^{20}} \sum_{x=0}^6\binom{20}{x}=0.0577 .
+$$
+This is the $P$-value of the test. It would be reasonable to decide not to reject $H_0$, i.e., the results do not provide convincing evidence that $H_0$ is false.
+
+\subsection{Rank Test}
+\subsubsection{Symmetric Distribution}
+The analysis of ranks supposes that the data comes from a distribution that is symmetric about its median.\\
+A random variable $X$ is said to be symmetric about $a \in \mathbb{R}$ if
+$$
+X-a \quad \text { and } \quad-(X-a)
+$$
+have the same distribution.
+In terms of the density function $f_X$ this means that
+\begin{equation}
+f_X(x-a)=f_X(a-x)
+\end{equation}
+\subsubsection{Rank}
+Several rules of giving assign a rank to each point:\\
+(1) The signed rank is found by multiplying the rank with -1 if $X_i-M_0<0$ and +1 if $X_i-M_0>0$.\\
+(2) The positive ranks as well as the negative ranks are summed separately, yielding two statistics $W_{+}$and $W_{-}$.\\
+(3) Ties in ranks are assigned the average of their ranks.\\
+(4) The total sum of the ranks is always $n(n + 1)/2$.\\
+\textbf{Theorem} For non-small sample sizes $(n \geq 10)$ a normal distribution with parameters
+\begin{equation}
+E[W]=\frac{n(n+1)}{4}, \quad \operatorname{Var}[W]=\frac{n(n+1)(2 n+1)}{24}
+\end{equation}
+may be used as an approximation. However, in that case the variance needs to be reduced if there are ties: for each group of $t$ ties, the variance is reduced by $\left(t^3-t\right) / 48$.\\
+So, suppose that there are $n$ groups of ties, each having $t_i$ ties, then the variance will be 
+\begin{equation}
+     \operatorname{Var}[W]=\frac{n(n+1)(2 n+1)}{24}-\sum_{i=1}^n\dfrac{t_i^3-t_i}{48}
+    \end{equation}
+
+\subsubsection{Wilcoxon Signed Rank Test}
+
+\textbf{Wilcoxon Signed Rank Test.} Let $X_1, \ldots, X_n$ be a random sample of size $n$ from a \textbf{symmetric distribution}. Order the $n$ absolute differences $\left|X_i-M\right|$ according to magnitude, so that $X_{R_i}-M_0$ is the $R_i$ th smallest difference by modulus. If ties in the rank occur, the mean of the ranks is assigned to all equal values.
+Let
+$$
+W_{+}=\sum_{R_i>0} R_i, \quad \quad\left|W_{-}\right|=\sum_{R_i<0}\left|R_i\right| .
+$$
+We reject at significance level $\alpha$
+$$H_0: M \leq M_0\text{ if }\left|W_{-}\right| \text{ is smaller than the critical value for } \alpha$$
+$$H_0: M \geq M_0\text{ if }W_{+} \text{ is smaller than the critical value for } \alpha$$
+$$H_0: M=M_0\text{ if }W=\min \left(W_{+},\left|W_{-}\right|\right) \text{is smaller than the critical value for } \alpha / 2$$
+\textbf{Example}. Returning to the previous example, we want to test $H_0: M \leq 3.5$ and have the following observations, ordered from smallest to largest:
+\begin{center}
+\begin{tabular}{ccccccc}
+\hline$X_i$ & $X_i-M_0$ & $R_i$ & & $X_i$ & $X_i-M_0$ & $R_i$ \\
+\cline { 1 - 3 } \cline { 5 - 7 } 3 & -0.5 & -5.5 & & 2 & -1.5 & -13 \\
+3 & -0.5 & -5.5 & & 5 & 1.5 & +13 \\
+3 & -0.5 & -5.5 & & 5 & 1.5 & +13 \\
+3 & -0.5 & -5.5 & & 5 & 1.5 & +13 \\
+4 & 0.5 & +5.5 & & 5 & 1.5 & +13 \\
+4 & 0.5 & +5.5 & & 1 & -2.5 & -18 \\
+4 & 0.5 & +5.5 & & 6 & 2.5 & +18 \\
+4 & 0.5 & +5.5 & & 6 & 2.5 & +18 \\
+4 & 0.5 & +5.5 & & 6 & 2.5 & +18 \\
+4 & 0.5 & +5.5 & & 2 & 2.5 & +18 \\
+\hline
+\end{tabular}
+\end{center}
+We calculate the sum of the negative ranks,
+$$
+w_{-}=-5.5-5.5-5.5-5.5-13-18=-53 .
+$$
+Consulting a table, the critical value for $n=20$ and $\alpha=0.05$ is 60. For $\alpha=0.01$ it is 43. Since $\left|w_{-}\right|$lies between these values, the $P$-value of the test is between $1 \%$ and than $5 \%$, most likely around $2 \%-3 \%$.
+Alternatively, we may use the normal distribution with mean $\mu=n(n+1) / 4=105$ and variance
+$$
+\sigma^2=\frac{n(n+1)(2 n+1)}{24}-\frac{10^3-10}{48}-2 \cdot \frac{5^3-5}{48} .
+$$
+Then
+$$
+z=\frac{\left|w_{-}\right|-\mu}{\sigma}=-1.977
+$$
+and we find that $P[Z<-1.977]=0.024$. That means we can reject $H_0$ with the significance level $0.024$.\\
+
+\noindent \textbf{Remark.} If we yield a relatively low $P-$value, we can make following possible conclusions:\\
+(1) The die results follow a non-symmetric distribution, or\\
+(2) The die results follow a symmetric distribution, but the median does not follows $H_0$.
+
+
+\section{Appendix: Solving Problems with Mathematica}
+
+\begin{figure}[!h] 
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/Probability.png} 
+\end{figure}
+\begin{figure}[!h] 
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/probability_distribution.png} 
+\end{figure}
+\begin{figure}[!h] 
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/transform.png} 
+\end{figure}
+\begin{figure}[!h] 
+    \centering
+    \includegraphics[width=1.0\textwidth]{figures/piecewise.png} 
+\end{figure}
+\begin{figure}[!h] 
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/transform_2.png} 
+\end{figure}
+\begin{figure}[!h] 
+    \centering
+    \includegraphics[width=1.0\textwidth]{figures/multivariable_distribution.png} 
+\end{figure}
+
+
+\begin{figure}[!h] 
+    \centering
+    \includegraphics[width=1.0\textwidth]{figures/data.png} 
+\end{figure}
+\begin{figure}[!h] 
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/histogram_creating.png} 
+\end{figure}
+\begin{figure}[!h] 
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/stemleaf.png} 
+\end{figure}
+\begin{figure}[!h] 
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/boxplot.png} 
+\end{figure}
+
+
+
+\begin{figure}[!h] 
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/CI.png} 
+\end{figure}
+\begin{figure}[!h] 
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/InverseCDF.png} 
+\end{figure}
+\begin{figure}[!h] 
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/maxlikelihood.png} 
+\end{figure}
+
+
+
+
+
+
+
+
+\end{document}
+
+
+
+
