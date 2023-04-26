@@ -1031,6 +1031,7 @@ To be probabilistically pure in the NHST sense, an experiment should be run once
 
 
 \section{Single Sample Test for the Mean and Variance}
+\textbf{The following hypothesis tests are suitable if the standard deviation $\sigma$ is unknown.}
 \subsection{The $T$-Test for $\mu$}
 Any test based on the statistic
 \begin{equation}
@@ -1187,69 +1188,589 @@ and we find that $P[Z<-1.977]=0.024$. That means we can reject $H_0$ with the si
 (2) The die results follow a symmetric distribution, but the median does not follows $H_0$.
 
 
-\section{Appendix: Solving Problems with Mathematica}
 
-\begin{figure}[!h] 
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures/Probability.png} 
-\end{figure}
-\begin{figure}[!h] 
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures/probability_distribution.png} 
-\end{figure}
-\begin{figure}[!h] 
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures/transform.png} 
-\end{figure}
-\begin{figure}[!h] 
-    \centering
-    \includegraphics[width=1.0\textwidth]{figures/piecewise.png} 
-\end{figure}
-\begin{figure}[!h] 
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures/transform_2.png} 
-\end{figure}
-\begin{figure}[!h] 
-    \centering
-    \includegraphics[width=1.0\textwidth]{figures/multivariable_distribution.png} 
-\end{figure}
+\section{Inferences of Proportions}
+\subsection{Parameter Estimation}
+It follows immediately that the following is a $100(1-\alpha) \%$ confidence interval for $p$ :
+$$
+\widehat{p} \pm z_{\alpha / 2} \sqrt{p(1-p) / n}
+$$
+But the interval depends on the unknown parameter $p$, which we are actually trying to estimate! One solution to the problem is to replace $p$ by $\widehat{p}$, i.e., to write
+\begin{equation}
+\widehat{p} \pm z_{\alpha / 2} \sqrt{\widehat{p}(1-\widehat{p}) / n}
+\end{equation}
+\textbf{Remark.} The requirement is that the sample size $n$ should be enough to make $t_{\alpha/2}$ approximate $z_{\alpha/2}$. Otherwise, we should use \textbf{binomial distribution} and calculate the confidence interval by hand rather than using normal approximation.\\
+
+\noindent We may want to be able to claim that "with $x x \%$ probability, $\hat{p}$ differs from $p$ by at most $d"$. Then if we have done pre-sampling and a rough estimator $\hat{p}$ has been obtained, then
+\begin{equation}
+    n=\frac{z_{\alpha / 2}^2 \widehat{p}(1-\widehat{p})}{d^2}
+\end{equation}
+\textbf{Corollary.} If no estimate for $p$ is available, we can at least use that $x(1-x)<1 / 4$ for all $x \in \mathbb{R}$ to deduce that
+\begin{equation}
+n=\frac{z_{\alpha / 2}^2}{4 d^2}
+\end{equation}
+will ensure $|p-\widehat{p}|<d$ with $100(1-\alpha) \%$ confidence.
+\subsection{Hypothesis Testing for Proportion}
+\textbf{Test for Proportion.} Let $X_1, \ldots, X_n$ be a random sample of (large) size $n$ from a Bernoulli distribution with parameter $p$ and let $\widehat{p}=\bar{X}$ denote the sample mean. Then any test based on the statistic
+$$
+Z=\frac{\widehat{p}-p_0}{\sqrt{p_0\left(1-p_0\right) / n}}
+$$
+is called a large-sample test for proportion. We reject at significance level $\alpha$
+$$H_0: p=p_0 \text{ if } |Z|>z_{\alpha / 2}$$
+$$H_0: p \leq p_0\text{ if }Z>z_\alpha$$
+$$H_0: p \geq p_0\text{ if }Z<-z_\alpha$$
+\subsection{Two Proportions}
+An unbiased estimator for $p_1-p_2$ is
+$$
+\widehat{p_1-p_2}:=\widehat{p}_1-\widehat{p}_2=\bar{X}^{(1)}-\bar{X}^{(2)}
+$$
+where $\bar{X}^{(1)}$ and $\bar{X}^{(2)}$ are the sample means of the respective random samples.\\
+Since we know that 
+$$
+\widehat{p_1-p_2} \sim N\left(p_1-p_2, \frac{p_1\left(1-p_1\right)}{n_1}+\frac{p_2\left(1-p_2\right)}{n_2}\right)
+$$
+We can get the confidence interval:
+\begin{equation}
+    \widehat{p}_1-\widehat{p}_2 \pm z_{\alpha / 2} \sqrt{\frac{\widehat{p}_1\left(1-\widehat{p}_1\right)}{n_1}+\frac{\widehat{p}_2\left(1-\widehat{p}_2\right)}{n_2}}
+    \end{equation}
+For hypothesis testing, the statistic should be 
+\begin{equation}
+    Z=\frac{\widehat{p}_1-\widehat{p}_2-\left(p_1-p_2\right)_0}{\sqrt{\dfrac{\widehat{p}_1\left(1-\widehat{p_1}\right)}{n_1}+\dfrac{\widehat{p_2}\left(1-\widehat{p_2}\right)}{n_2}}}
+    \end{equation}
+\subsection{Pooled Estimator and Pooled Test}
+    We define the pooled estimator for the proportion,
+    \begin{equation}
+    \widehat{p}:=\frac{n_1 \widehat{p}_1+n_2 \widehat{p}_2}{n_1+n_2} .
+    \end{equation}
+    And for hypothesis testing, we define the statistic
+    \begin{equation}
+        Z=\frac{\widehat{p}_1-\widehat{p}_2}{\sqrt{\widehat{p}(1-\widehat{p})\left(\dfrac{1}{n_1}+\dfrac{1}{n_2}\right)}}
+        \end{equation}
+    \textbf{Remark 1.} When comparing two proportions, we must firstly make sure that the two populations are independent.\\
+    \textbf{Remark 2.} We should first guarantee that the two criteria are not related with each other.\\
+   \textbf{Example.} Many consumers think that automobiles built on Mondays are more likely to have serious defects than those built on any other day of the week. To support this theory, a random sample of 100 cars built on Monday is selected and inspected. Of these, eight are found to have serious defects. A random sample of 200 cars produced on other days reveals 12 with serious defects. Do these data support the stated contention?
+We test
+$$
+H_0: p_1 \leq p_2 .
+$$
+where $p_1$ denotes the proportion of cars with serious defects produced on Mondays.
+Estimates for $p_1$ and $p_2$ are
+$$
+\widehat{p}_1=8 / 100=0.08, \quad \widehat{p}_2=12 / 200=0.06
+$$
+The pooled estimate for the common population proportion is
+$$
+\widehat{p}=\frac{100 \cdot 0.08+200 \cdot 0.06}{100+200}=20 / 300=0.066 .
+$$
+The observed value of the test statistic is
+$$
+\frac{\widehat{p}_1-\widehat{p}_2}{\sqrt{\widehat{p}(1-\widehat{p})\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}}=\frac{0.08-0.06}{\sqrt{0.066 \cdot 0.934\left(\frac{1}{100}+\frac{1}{200}\right)}}=0.658 .
+$$
+Then we know that $P[Z \geq 0.658] = 0.2546$ , so there is no evidence that $H_0$ might be false.
 
 
-\begin{figure}[!h] 
-    \centering
-    \includegraphics[width=1.0\textwidth]{figures/data.png} 
-\end{figure}
-\begin{figure}[!h] 
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures/histogram_creating.png} 
-\end{figure}
-\begin{figure}[!h] 
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures/stemleaf.png} 
-\end{figure}
-\begin{figure}[!h] 
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures/boxplot.png} 
-\end{figure}
+
+\section{Comparison of Variances and Means}
+\subsection{Comparison of Two Variances}
+\subsubsection{The $F$-Distribution}
+\textbf{Definition.} Let $X_{\gamma_1}^2$ and $X_{\gamma_2}^2$ be independent chi-squared random variables with $\gamma_1$ and $\gamma_2$ degrees of freedom, respectively.
+The random variable
+\begin{equation}
+F_{\gamma_1, \gamma_2}=\frac{X_{\gamma_1}^2 / \gamma_1}{X_{\gamma_2}^2 / \gamma_2}
+\end{equation}
+is said to follow an $F$-distribution with $\gamma_1$ and $\gamma_2$ degrees of freedom. And we can get that
+\begin{equation}
+P\left[F_{\gamma_1, \gamma_2}<x\right]=P\left[\frac{1}{F_{\gamma_1, \gamma_2}}>\frac{1}{x}\right]=1-P\left[F_{\gamma_2, \gamma_1}<\frac{1}{x}\right]
+\end{equation}
+The probability density function of the $F-$distribution is
+\begin{equation}
+    f_{\gamma_1, \gamma_2}(x)=\gamma_1^{\gamma_1 / 2} \gamma_2^{\gamma_2 / 2} \dfrac{\Gamma\left(\dfrac{\gamma_1+\gamma_2}{2}\right)}{\Gamma\left(\dfrac{\gamma_1}{2}\right) \Gamma\left(\dfrac{\gamma_2}{2}\right)} \dfrac{x^{\gamma_1 / 2-1}}{\left(\gamma_1 x+\gamma_2\right)^{\left(\gamma_1+\gamma_2\right) / 2}}
+    \end{equation}
+\textbf{Remark.} As $x$ increases, the value of Chi-squared distribution goes to $0$ exponentially, but the $F-$distribution goes to $0$ polynomially. \\
+
+\noindent We define the critical point of the $F$-distribution $f_{\alpha, \gamma_1, \gamma_2}$ such that
+$$
+ P\left[F_{\gamma_1, \gamma_2}>f_{\alpha, \gamma_1, \gamma_2}\right]=\alpha 
+$$
+And from the relaion between $F_{\gamma 1, \gamma 2}$ and $F_{\gamma 2, \gamma 1}$, we have
+\begin{equation}
+    f_{1-\alpha, \gamma_1, \gamma_2}=\frac{1}{f_{\alpha, \gamma_2, \gamma_1}}
+    \end{equation}
+
+\subsubsection{The $F$-Test}
+\textbf{Theorem}. Let $S_1^2$ and $S_2^2$ be sample variances based on independent random samples of sizes $n_1$ and $n_2$ drawn from normal populations with means $\mu_1$ and $\mu_2$ and variances $\sigma_1^2$ and $\sigma_2^2$, respectively. If $\sigma_1^2=\sigma_2^2$, then the statistic
+$$
+S_1^2 / S_2^2
+$$
+follows an $F$-distribution with $n_1-1$ and $n_2-1$ degrees of freedom.\\
+
+\noindent The $F-$test is based on the statistic
+\begin{equation}
+    F_{n_1-1, n_2-1}=\frac{S_1^2}{S_2^2}
+    \end{equation}
+    We reject at significance level $\alpha$
+    $$
+    \begin{aligned}
+    & H_0: \sigma_1 \leq \sigma_2 \quad \text { if } \quad  \frac{S_1^2}{S_2^2}>f_{\alpha, n_1-1, n_2-1} \\
+    & H_0: \sigma_1 \geq \sigma_2 \quad \text { if } \quad \frac{S_2^2}{S_1^2}>f_{\alpha, n_2-1, n_1-1} \\
+    & H_0: \sigma_1=\sigma_2 \quad \text { if } \quad  \frac{S_1^2}{S_2^2}>f_{\alpha / 2, n_1-1, n_2-1} \text { or } \frac{S_2^2}{S_1^2}>f_{\alpha / 2, n_2-1, n_1-1}
+    \end{aligned}
+    $$
+    \textbf{Remark.} For the $F$-test to be applicable, it is essential that the populations are normally distributed, and it will be more powerful if the sample sizes $n_1$ and $n_2$ are equal.
+    \begin{figure}[h] 
+        \centering
+        \includegraphics[width=0.8\textwidth]{figures/oc_curve_f.png} 
+        \caption{OC curves for F-test.} 
+    \end{figure}
+
+\subsection{Comparison of Two Means}
+\subsubsection{Neyman-Pearson Test with Variances Known}
+If we know $\sigma_1$ and $\sigma_2$, the test statistic is
+\begin{equation}
+    Z=\frac{\bar{X}_1-\bar{X}_2}{\sqrt{\sigma_1^2 / n_1+\sigma_2^2 / n_2}}
+    \end{equation}
+    We can also use the $O C$ curves for the normal distribution to find power and sample size for a test. In that case, we use
+    $$
+    d=\frac{\left|\mu_1-\mu_2\right|}{\sqrt{\sigma_1^2+\sigma_2^2}} \quad \text{or} \quad     d=\frac{\mu_2-\mu_1}{\sqrt{\sigma_1^2+\sigma_2^2}}
+    $$
+    for two-sided test and one-sided test respectively, with $n=n_1=n_2$ (equal sample sizes).\\
+    If $n_1 \neq n_2$, the table is used with the equivalent sample size
+    $$
+    n=\frac{\sigma_1^2+\sigma_2^2}{\sigma_1^2 / n_1+\sigma_2^2 / n_2}
+    $$
+    \textbf{Example}. Continuing from Example 23.1, if $H_1$ is true, we want to find the sample sizes (number of days) required to detect this difference with a probability of 0.90 .
+We have $d=10 / \sqrt{40+50}=1.05$ and using the chart for $\alpha=0.05$ (one-sided) we find $n=n_1=n_2=9$.\\
+
+\noindent We may use the confidence interval
+\begin{equation}
+    \mu_1-\mu_2=\bar{x}^{(1)}-\bar{x}^{(2)} \pm z_\alpha \sqrt{\sigma_1^2 / n_1+\sigma_2^2 / n_2}
+    \end{equation}
+    To help checking whether or not to reject $H_0$.
+
+\subsubsection{Compare Two Means with Unknown but Equal Variances}
+We use the test statistic
+\begin{equation}
+    T_{n_1+n_2-2} =\frac{Z}{\sqrt{X_{n_1+n_2-2}^2 /\left(n_1+n_2-2\right)}}
+    =\frac{\left(\bar{X}_1-\bar{X}_2\right)-\left(\mu_1-\mu_2\right)}{\sqrt{S_p^2\left(1 / n_1+1 / n_2\right)}}
+    \end{equation}
+    where we define the pooled estimator for the variance
+    \begin{equation}
+        S_p^2=\frac{\left(n_1-1\right) S_1^2+\left(n_2-1\right) S_2^2}{n_1+n_2-2}
+        \end{equation}
+    We immediately obtain the following $100(1-\alpha) \%$ confidence interval for $\mu_1-\mu_2$,
+    \begin{equation}
+    \left(\bar{X}_1-\bar{X}_2\right) \pm t_{\alpha / 2, n_1+n_2-2} \sqrt{S_p^2\left(1 / n_1+1 / n_2\right)}
+    \end{equation}
+    \textbf{Theorem.} Student's $T$-Test for Equal Variances. Suppose two random samples of sizes $n_1$ and $n_2$ from two normal distributions $N\left(\mu_1, \sigma^2\right)$ and $N\left(\mu_2, \sigma^2\right)$ are given.
+Denote by $\bar{X}^{(1)}$ and $\bar{X}^{(2)}$ the means of the two samples and let $S_p^2$ be the pooled sample variance (23.1). Let $\left(\mu_1-\mu_2\right)_0$ be a null value for the difference $\mu_1-\mu_2$. Then the test based on the statistic
+$$
+T_{n_1+n_2-2}=\frac{\left(\bar{X}^{(1)}-\bar{X}^{(2)}\right)-\left(\mu_1-\mu_2\right)_0}{\sqrt{S_p^2\left(1 / n_1+1 / n_2\right)}}
+$$
+is called a Student's (pooled) test for equality of means.
+We reject at significance level $\alpha$
+$$H_0: \mu_1-\mu_2=\left(\mu_1-\mu_2\right)_0 \text{ if }\left|T_{n_1+n_2-2}\right|>t_{\alpha / 2, n_1+n_2-2}$$
+$$H_0: \mu_1-\mu_2 \leq\left(\mu_1-\mu_2\right)_0 \text{ if }T_{n_1+n_2-2}>t_{\alpha, n_1+n_2-2}$$
+$$H_0: \mu_1-\mu_2 \geq\left(\mu_1-\mu_2\right)_0 \text{ if }T_{n_1+n_2-2}<-t_{\alpha, n_1+n_2-2}$$
+In the case of equal variances $\sigma_1^2=\sigma_2^2=\sigma^2$ and equal sample sizes $n_1=n_2=n$, we can use the usual $\mathrm{OC}$ curves for the $T$-test with
+$$
+d=\frac{\left|\mu_1-\mu_2\right|}{2 S_p}
+$$
+However, we must use the \textbf{modified sample size $n^*=2n-1$} when reading the charts.\\
+\textbf{Remark.} When performing pre-tests, we must \textbf{gather new data} for a comparison of means test.
+
+\subsubsection{The Welch-Satterthwaite Approximation}
+\textbf{Welch's $T$-Test for Unequal Variances}. Suppose two random samples of sizes $n_1$ and $n_2$ from two normal distributions $N\left(\mu_1, \sigma_1^2\right)$ and $N\left(\mu_2, \sigma_2^2\right)$ are given.
+Denote by $\bar{X}^{(1)}$ and $\bar{X}^{(2)}$ the means of the two samples and let $\gamma$ given by (23.2). Let $\left(\mu_1-\mu_2\right)_0$ be a null value for the difference $\mu_1-\mu_2$. Then the test based on the statistic
+$$
+T_\gamma=\frac{\left(\bar{X}_1-\bar{X}_2\right)-\left(\mu_1-\mu_2\right)_0}{\sqrt{S_1^2 / n_1+S_2^2 / n_2}}
+$$
+is called a Welch's (pooled) test for equality of means. We reject at significance level $\alpha$
+- $H_0: \mu_1-\mu_2=\left(\mu_1-\mu_2\right)_0$ if $\left|T_\gamma\right|>t_{\alpha / 2, \gamma}$,
+- $H_0: \mu_1-\mu_2 \leq\left(\mu_1-\mu_2\right)_0$ if $T_\gamma>t_{\alpha, \gamma}$,
+- $H_0: \mu_1-\mu_2 \geq\left(\mu_1-\mu_2\right)_0$ if $T_\gamma<-t_{\alpha, \gamma}$.
+where 
+\begin{equation}
+    \gamma = \dfrac{(S_1^2/n_1+S_2^2/n_2)^2}{\dfrac{(S_1^2/n_1)^2}{n_1-1}+\dfrac{(S_2^2/n_1)^2}{n_2-1}}
+\end{equation}
+
+
+\section{Non-Parametric Comparisons}
+\subsection{Wilcoxon Rank-Sum Test}
+24.1. Wilcoxon Rank-Sum Test. Let $X$ and $Y$ be two random samples following some continuous distributions.
+Let $X_1, \ldots, X_m$ and $Y_1, \ldots, Y_n, \boldsymbol{m} \leq \boldsymbol{n}$, be random samples from $X$ and $Y$ and associate the rank $R_i, i=1, \ldots, m+n$, to the $R_i$ th smallest among the $m+n$ total observations. If ties in the rank occur, the mean of the ranks is assigned to all equal values.
+Then the test based on the statistic
+$$
+W_m:=\text { sum of the ranks of } X_1, \ldots, X_m .
+$$
+is called the Wilcoxon rank-sum test.
+We reject $H_0: P[X>Y]=1 / 2$ (and similarly the analogous one-sided hypotheses) at significance level $\alpha$ if $W_m$ falls into the corresponding critical region.\\
+For large values of $m(m \geq 20), W_m$ is approximately normally distributed with
+$$
+\mathrm{E}\left[W_m\right]=\frac{m(m+n+1)}{2}, \quad \operatorname{Var}\left[W_m\right]=\frac{m n(m+n+1)}{12}
+$$
+If there are many ties, the variance may be corrected by taking
+$$
+\operatorname{Var}\left[W_m\right]=\frac{m n(m+n+1)}{12-\sum_{\text {groups }} \frac{t^3+t}{12}}
+$$
+\subsection{Paired T-Test}
+We will assume that X and Y follow a joint bivariate normal distribution. Then it is not hard to see that $D = X - Y$ follows a normaldistribution.\\
+Then
+$$
+T_{n-1}=\frac{\bar{D}-\mu_D}{\sqrt{S_D^2 / n}}
+$$
+follows a $T$-distribution with $n-1$ degrees of freedom.
+We may find confidence intervals for $\mu_D$ and conduct hypothesis tests as we would for any normally distributed random variable. $A T$-test for $D$ is called a paired $T$-test for $X$ and $Y$.
+\subsection{Estimate and Test for Covariance}
+The natural choice (method of moments!) for an estimator for the correlation coefficient is then
+$$
+R:=\hat{\rho}=\frac{\sum\left(X_i-\bar{X}\right)\left(Y_i-\bar{Y}\right)}{\sqrt{\sum\left(X_i-\bar{X}\right)^2} \sqrt{\sum\left(Y_i-\bar{Y}\right)^2}}
+$$
+We can thus test $H_0: \varrho=\varrho_0$, by using the test statistic
+$$
+\begin{aligned}
+Z & =\frac{\sqrt{n-3}}{2}\left(\ln \left(\frac{1+R}{1-R}\right)-\ln \left(\frac{1+\varrho_0}{1-\varrho_0}\right)\right) \\
+& =\sqrt{n-3}\left(\operatorname{Artanh}(R)-\operatorname{Artanh}\left(\varrho_0\right)\right)
+\end{aligned}
+$$
+
+\section{Categorial Data}
+\textbf{Definition}. A random vector $\left(\left(X_1, \ldots, X_k\right), f_{X_1 X_2 \cdots X_k}\right)$ with
+$$
+\left(X_1, \ldots, X_k\right): S \rightarrow \Omega=\{0,1,2, \ldots, n\}^k
+$$
+and (joint) distribution function $f_{X_1 X_2 \cdots X_k}: \Omega \rightarrow \mathbb{R}$ given by
+\begin{equation}
+f_{X_1 X_2 \cdots x_k}\left(x_1, \ldots, x_k\right)=\frac{n !}{x_{1} ! \cdots x_{k} !} p_1^{x_1} \cdots p_k^{x_k}
+\end{equation}
+$p_1, \ldots, p_k \in(0,1), n \in \mathbb{N} \backslash\{0\}$ is said to have a multinomial distribution with parameters $n$ and $p_1, \ldots, p_k$.\\
+We have 
+$$
+E[X_i]=np_i \quad \operatorname{Var}[X_i]np_i(1-p_i) \quad \operatorname{Cov}[X_i,X_j] = -np_ip_j
+$$
+\subsection{The Pearson Statistic}
+If $n$ is large, then the Pearson statistic
+\begin{equation}
+    \sum_{i=1}^k\dfrac{(X_i-np_i)^2}{np_i}  =  \sum_{i=1}^k\dfrac{(O_i-E_i)^2}{E_i}\sim \operatorname{Chi}(k-1) 
+\end{equation}
+where $k$ is the number of categories.\\
+\textbf{Cochran's Rule} states that for $n$, we should require
+$$
+E[X_i] = np_i \geq 1 \quad \text{for all } i=1,...,k 
+$$
+$$
+E[X_i] = np_i \geq 5 \quad \text{for 80\% of } i=1,...,k 
+$$
+
+\subsection{Test for Multinomial Distribution}
+\textbf{Pearson's Chi-squared Goodness-of-Fit Test}. Let $\left(X_1, \ldots, X_k\right)$ be a sample of size $n$ from a categorical random variable with parameters $\left(p_1, \ldots, p_k\right)$ satisfying Cochran's Rule. Let $\left(p_{1_0}, \ldots, p_{k_0}\right)$ be a vector of null values. Then the test
+$$
+H_0: p_i=p_{i_0}, \quad i=1, \ldots, k,
+$$
+based on the statistic
+\begin{equation}
+X_{k-1}^2=\sum_{i=1}^k \frac{\left(X_i-n p_{i_0}\right)^2}{n p_{i_0}}
+\end{equation}
+is called an chi-squared goodness-of-fit test.
+We reject $H_0$ at significance level $\alpha$ if 
+$$X_{k-1}^2>\chi_{\alpha, k-1}^2$$
+
+\subsection{Goodness-of-Fit for a Discrete Distribution}
+\begin{equation}
+\sum_{i=1}^k\dfrac{(X_i-E[X_i])^2}{E[X_i]}\sim \operatorname{Chi}(k-1-m)
+\label{goodness}
+\end{equation}
+where $m$ represents the number of parameters.
+
+\subsection{Goodness-of-Fit for a Continuous Distribution}
+For continuous distribution, we have
+$$
+p_i=P[a_{i-1}\leq X \leq a_i] = \int_{a_{i-1}}^{a_i}f(x)dx
+$$
+We follow the following steps when we need to test if the data corresponds with a certain continuous distribution:\\
+(1) Calculate the estimator of the parameter (e.g. $\hat{\beta}$).\\
+(2) Arbitrarily choose the number of categories (e.g. $k=10$).\\
+(3) Calculate the boundaries of each category.\\
+(4) For each category, obtain the frequency.\\
+(5) Use $\sum_{i=1}^k\dfrac{(O_i-E_i)^2}{E_i}\sim \operatorname{Chi}(k-1-m)$
+to calculate Pearson statistic.
+
+\subsection{Cell Probabilities and Independence}
+If the row and column categorizations are independent, then it should be the case that
+$$
+H_0: p_{i j}=p_i . p_{. j}, \quad i=1, \ldots, r, j=1, \ldots, c .
+$$
+We will therefore develop a test to determine whether there is statistical evidence that the above statement is false.\\
+Hence, if $H_0$ is assumed, the expected number of elements in the $(i, j)$ th cell is
+$$
+E_{i j}=n \cdot \widehat{p_{i j}}=\frac{n_i \cdot n_{\cdot j}}{n}
+$$
+We can now compare the observed frequencies $O_{i j}$ in the $(i, j)$ th cell to the expected frequencies $E_{i j}$. We will again use the Pearson statistic
+$$
+X_{(r-1)(c-1)}^2=\sum_{i=1}^r \sum_{j=1}^c \frac{\left(O_{i j}-E_{i j}\right)^2}{E_{i j}}
+$$
+which follows a chi-squared distribution with
+$$
+k-1-m=r c-1-(r+c-2)=r c-r-c+1=(r-1)(c-1)
+$$
+degrees of freedom. We reject $H_0$ if the value of $X_{(r-1)(c-1)}^2$ exceeds the critical value of the corresponding chi-squared distribution.
 
 
 
-\begin{figure}[!h] 
+
+\section{Simple Linear Regression}
+In this section, we assume that the mean $\mu_{Y \mid x}$ of $Y \mid x$ is given by
+$$
+\mu_{Y \mid x}=\beta_0+\beta_{1 x} \quad \text { for some } \beta_0, \beta_1 \in \mathbb{R} .
+$$
+This is called a simple linear regression model with model parameters $\beta_0$ and $\beta_1$.
+Another way of writing this model is
+$$
+Y \mid x=\beta_0+\beta_1 x+E
+$$
+where $E[E]=0$.
+Our goal is to find estimators
+$$
+\begin{array}{ll}
+B_0:=\widehat{\beta}_0=\text { estimator for } \beta_0, & b_0=\text { estimate for } \beta_0, \\
+B_1:=\widehat{\beta}_1=\text { estimator for } \beta_1, & b_1=\text { estimate for } \beta_1,
+\end{array}
+$$
+\subsection{Least Squares Estimation}
+Given a sample of size $n$, we define the error sum of squares
+$$
+\mathrm{SS}_{\mathrm{E}}:=e_1^2+e_2^2+\cdots+e_n^2=\sum_{i=1}^n\left(y_i-\left(b_0+b_1 x_i\right)\right)^2 .
+$$
+Since we determine the estimators for $\beta_0$ and $\beta_1$ by minimizing this sum of squares, $b_0$ and $b_1$ are called least-squares estimates.
+\subsection{The Normal Equation}
+These are linear equations for $b_0$ and $b_1$, which may be easily solved:
+\begin{equation}
+\begin{aligned}
+& b_1=\frac{n \sum_{i=1}^n x_i y_i-\left(\sum_{i=1}^n x_i\right)\left(\sum_{i=1}^n y_i\right)}{n \sum_{i=1}^n x_i^2-\left(\sum_{i=1}^n x_i\right)^2} \\
+& b_0=\frac{1}{n} \sum_{i=1}^n y_i-b_1 \cdot \frac{1}{n} \sum_{i=1}^n x_i
+\end{aligned}
+\end{equation}
+We take the notation
+$$
+S_{xx}=\sum_{i=1}^n(x_i-\bar{x})^2 \quad S_{yy}=\sum_{i=1}^n(y_i-\bar{y})^2 \quad S_{xy} =\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})
+$$
+Then the equation above can be expressed as
+\begin{equation}
+    b_0=\bar{y}-b_1\bar{x} \quad b_1=\dfrac{S_{xy}}{S_{xx}} \quad \operatorname{SS_E}=S_{yy}-b_1S_{xy}
+\end{equation}
+Model Assumption.\\
+(i) For each value of $x$, the random variable $Y \mid x$ follows a normal distribution with variance $\sigma^2$ and mean $\mu_{Y \mid x}=\beta_0+\beta_1 x$.\\
+(ii) The random variables $Y \mid x_1$ and $Y \mid x_2$ are independent if $x_1 \neq x_2$.\\
+A random sample of size $n$ consists of $n$ pairs $\left(x_i, Y_i\right), i=1, \ldots, n$, where the random variables $Y_i=Y \mid x_i$ are i.i.d. normal with variance $\sigma^2$ and mean $\mu_{Y \mid x_i}=\beta_0+\beta_1 x_i$\\
+\textbf{Remark}. We do not require that $x_i \neq x_j$. The random sample may contain more than a single measurement of $Y \mid x_i$. All the $x_i$ are treated in the same way, e.g., when calculating $\bar{x}$.
+\subsection{Distribution of the Least Squares Estimators}
+\textbf{Theorem}. Given a random sample of $Y \mid x$ of size $n$, the statistics
+\begin{equation}
+\frac{B_1-\beta_1}{\sigma / \sqrt{\sum\left(x_i-\bar{x}\right)^2}} \quad \text { and } \quad \frac{B_0-\beta_0}{\sigma \sqrt{\frac{\sum x_i^2}{n \sum\left(x_i-\bar{x}\right)^2}}}
+\end{equation}
+follow a standard normal distribution.
+\textbf{In particular, $B_0$ and $B_1$ are unbiased estimators}.\\
+If $\sum(x_i-\bar{x})^2$ is small, i.e., $x_i$ are closed to each other, then the estimator $B_1$ will have a large vairance, which means the slope is unstable.\\
+If $\sum x_i^2$ is small, i.e., the points are close to the $y$-axis, then the estimator $B_0$ will have a small variance, which means the intersect is stable.
+\subsection{Least Square Estimator for the Variance}
+The variance $\sigma^2$ of $Y \mid x$ is assumed to be the same for all values of $x$. To estimate it, we use the error sum of squares,
+\begin{equation}
+S^2:=\frac{\mathrm{SS}_{\mathrm{E}}}{n-2}=\frac{1}{n-2} \sum_{i=1}^n\left(y_i-\widehat{\mu}_{Y \mid x_i}\right)^2
+\end{equation}
+It turns out that this estimator is unbiased for $\sigma^2$ and in fact
+$$
+(n-2) S^2 / \sigma^2=\frac{\mathrm{SS}_{\mathrm{E}}}{\sigma^2}
+$$
+follows a chi-squared distribution with $n-2$ degrees of freedom.
+\subsection{Confidence Interval}
+We have $100(1-\alpha) \%$ confidence intervals
+\begin{equation}
+B_1 \pm t_{\alpha / 2, n-2} \frac{S}{\sqrt{S_{x x}}}, \quad \quad B_0 \pm t_{\alpha / 2, n-2} \frac{S \sqrt{\sum x_i^2}}{\sqrt{n S_{x x}}}
+\end{equation}
+for $\beta_1$ and $\beta_0$, respectively.
+\subsection{Hypotheses Testing for Linear Regression}
+We say that a regression is \textbf{significant} if there is statistical evidence that $\beta_1 \neq 0$.\\
+\textbf{Test for Significance of Regression}. Let $\left(x_i, Y \mid x_i\right), i=1, \ldots, n$ be a random sample from $Y \mid x$. We reject
+$$
+H_0: \beta_1=0
+$$
+at significance level $\alpha$ if the statistic
+\begin{equation}
+T_{n-2}=\frac{B_1}{S / \sqrt{S_{x x}}}.\
+\end{equation}
+satisfies $\left|T_{n-2}\right|>t_{\alpha / 2, n-2}$
+\subsection{Distribution of Estimated Mean}
+Since $B_0$ and $B_1$ are unbiased estimators for $\beta_0$ and $\beta_1$, we know that 
+$$
+\hat{\mu}_{Y\mid x} = B_0+B_1x
+$$
+is also an unbiased estimator for $\mu_{Y\mid x}$, and
+\begin{equation}
+    \dfrac{\hat{\mu}_{Y\mid x} - \mu_{Y\mid x}}{\sigma \sqrt{\dfrac{1}{n}+\dfrac{(x-\bar{x}^2)}{S_{xx}}}}
+\end{equation}
+follows a standard normal distribution.
+
+\section{Prediction and Model Analysis}
+\subsection{Prediction}
+An estimate is a statistical statement on the value of an unknown, but fixed, population parameter, while a prediction is a statistical statement on the value of an essentially random quantity. And we defined a $100(1-\alpha)\%$ prediction interval $[L_1,L_2]$ for a random variable
+$$
+P[L_1 \leq X \leq L_2] = 1 - \alpha
+$$
+For $\hat{Y\mid x}$, after standardizing and dividing by $S / \sigma$ we obtain the $T_{n-2}$ random variable
+\begin{equation}
+T_{n-2}=\frac{\widehat{Y \mid x}-Y \mid x}{S \sqrt{1+\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{x x}}}}
+\end{equation}
+We thus obtain the following $100(1-\alpha) \%$ prediction interval for $Y \mid x$ :
+\begin{equation}
+\widehat{Y \mid x} \pm t_{\alpha / 2, n-2} S \sqrt{1+\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{x x}}}
+\end{equation}
+
+\subsection{Model Analysis}
+The total variation of the response variable
+\begin{equation}
+    \mathrm{SS_T} = S_{yy} = \sum_{i=1}^n(Y_i-\bar{Y})^2
+\end{equation}
+We will also call this the Total Sum of Squares. It represents the variation of $Y$ regardless of any model.\\
+And we define 
+\begin{equation}
+    R^2 = \dfrac{\mathrm{SS_T} - \mathrm{SS_E}}{\mathrm{SS_T}} = \dfrac{S_{xy}^2}{S_{xx}S_{yy}}
+\end{equation}
+The coefficient $R^2$ expresses the proportion of the total variation in $Y$ that is explained by the linear model.\\
+By using $R$ only, we can reexpress the statistic as 
+\begin{equation}
+    T_{n-2} = T_{n-2}=\frac{B_1}{S / \sqrt{S_{x x}}} = \dfrac{R}{\sqrt{1-R^2}}\sqrt{n-2}
+\end{equation}
+\textbf{Test for Significance of Regression}. Let $\left(x_i, Y_i\right), i=1, \ldots, n$ be a random sample from $Y \mid x$. We reject
+$$
+H_0: \beta_1=0 \quad \text{(or regression not significant.)}
+$$
+at significance level $\alpha$ if the statistic
+$$
+F_{1, n-2}=(n-2) \frac{R^2}{1-R^2}=(n-2) \frac{\mathrm{SS}_{\mathrm{T}}-\mathrm{SS}_{\mathrm{E}}}{\mathrm{SS}_{\mathrm{E}}} .
+$$
+satisfies $F_{1, n-2}>f_{\alpha, 1, n-2}$.\\
+\textbf{Test for Correlation}. Let $(X, Y)$ follow a bivariate normal distribution with correlation coefficient $\varrho \in(-1,1)$. Let $R$ be the estimator (24.1) for e. Then
+$$
+H_0: \varrho=0
+$$
+is rejected at significance level $\alpha$ if
+$$
+\left|\frac{R \sqrt{n-2}}{\sqrt{1-R^2}}\right|>t_{\alpha / 2, n-2} .
+$$
+
+\subsection{Lake-of-Fit Error}
+$\operatorname{SS_E}$ can be regared as composed of two factors: pure error $\operatorname{SS_{E;pe}}$  and the lack-of-fit $\operatorname{SS_{E;pe}}$ .
+\begin{equation}
+    \operatorname{SS_{E;pe}} = \sum_{i=1}^k\sum_{j=1}^{n_i}(Y_{ij}-\bar{Y_i}) \quad \operatorname{SS_{E;lf}} = \operatorname{SS_E}-\operatorname{SS_{E;pe}} 
+\end{equation}
+\textbf{Test for Lack of Fit}. Let $x_1, \ldots, x_k$ be regressors and $Y_{i 1}, Y_{i 2}, \ldots, Y_{i n_i}$, $i=1, \ldots, k$, the measured responses at each of the regressors. Let $S_{E ; p e}$ and $\mathrm{SS}_{\mathrm{E} ; \text { lf }}$ be the pure error and lack-of-fit sums of squares for a linear regression model. Then
+$$H_0 \text{: the linear regression model is appropriate}$$
+is rejected at significance level $\alpha$ if the test statistic
+$$
+F_{k-2, n-k}=\frac{\mathrm{SS}_{\mathrm{E} ; \mathrm{If}} /(k-2)}{\mathrm{SS}_{\mathrm{E} ; \mathrm{pe}} /(n-k)}
+$$
+satisfies $F_{k-2, n-k}>f_{\alpha, k-2, n-k}$. In this formula, $n$ represents the length of data, and $k$ represents the number of groups.
+
+
+
+
+
+\section{Multiple Linear Regression}
+\subsection{Sum of Squares Error}
+We have the decomposition
+$$
+\mathrm{SS}_{\mathrm{T}}=\mathrm{SS}_{\mathrm{R}}+\mathrm{SS}_{\mathrm{E}}
+$$
+where\\
+(i) $\mathrm{SS}_{\mathrm{T}}$ represents the total variation of the response variable $Y$,\\
+(ii) $\mathrm{SS}_{\mathrm{R}}$ (called the regression sum of squares) represents the variation of the response predicted by the regression model and\\
+(iii) $\mathrm{SS}_{\mathrm{E}}$ represents the deviation of the response from the model.\\
+\textbf{Lemma}. The regression sum of squares can be expressed as
+$$
+\mathrm{SS}_{\mathrm{R}}=\left\langle\boldsymbol{b}, X^T \boldsymbol{Y}\right\rangle-\frac{1}{n}\left(\sum_{i=1}^n Y_i\right)^2
+$$
+In particular, in the case of the multilinear model,
+$$
+\mathrm{SS}_{\mathrm{R}}=b_0 \sum_{i=1}^n Y_i+\sum_{j=1}^p b_j \sum_{i=1}^n x_{j i} Y_i-\frac{1}{n}\left(\sum_{i=1}^n Y_i\right)^2,
+$$
+and in the polynomial model,
+$$
+\mathrm{SS}_{\mathrm{R}}=b_0 \sum_{i=1}^n Y_i+\sum_{j=1}^p b_j \sum_{i=1}^n x_i^j Y_i-\frac{1}{n}\left(\sum_{i=1}^n Y_i\right)^2 .
+$$
+Analogously to (27.2), the coefficient of multiple determination,
+$$
+R^2=\frac{\mathrm{SS}_{\mathrm{R}}}{\mathrm{SS}_{\mathrm{T}}}
+$$
+gives the proportion of the response variation in $Y$ explained by the model.\\
+\begin{figure}[h] 
     \centering
-    \includegraphics[width=0.8\textwidth]{figures/CI.png} 
+    \includegraphics[width=0.6\textwidth]{figures/SST.png} 
+    \caption{Yellow lines represent $\mathrm{SS}_{\mathrm{T}}$, red lines represent $\mathrm{SS}_{\mathrm{E}}$, and green lines represent $\mathrm{SS}_{\mathrm{R}}$}
 \end{figure}
-\begin{figure}[!h] 
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures/InverseCDF.png} 
-\end{figure}
-\begin{figure}[!h] 
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures/maxlikelihood.png} 
-\end{figure}
+\textbf{F-Test for Significance of Regression}. Let $x_1, \ldots, x_p$ be the predictor variables in a multilinear model (28.1) for $Y$. Then
+$$
+H_0: \beta_1=\beta_2=\cdots=\beta_p=0,
+$$
+is rejected at significance level $\alpha$ if the test statistic
+$$
+F_{p, n-p-1}=\frac{\mathrm{SS}_{\mathrm{R}} / p}{\mathrm{SS}_{\mathrm{E}} /(n-p-1)}=\frac{\mathrm{SS}_{\mathrm{R}} / p}{S^2} = \dfrac{n-p-1}{p} \dfrac{R^2}{1-R^2}
+$$
+satisfies $F_{p, n-p-1}>f_{\alpha, p, n-p-1}$.
 
 
+\subsection{Distribution of the Least-Squares Estimators}
+Let us write
+$$
+\left(X^T X\right)^{-1}=\left(\begin{array}{ccccc}
+\xi_{00} & * & \cdots & \cdots & * \\
+* & \xi_{11} & \ddots & & * \\
+\vdots & \ddots & \ddots & \ddots & \vdots \\
+\vdots & & \ddots & \ddots & * \\
+* & \cdots & \cdots & * & \xi_{p p}
+\end{array}\right)
+$$
+where the starred values are uninteresting for us.
+Hence,
+$$
+\operatorname{Var}\left[B_i\right]=\xi_{i i} \sigma^2, \quad i=0, \ldots, p
+$$
+We have therefore proved the following result:
+\textbf{Theorem}. The random vector $\boldsymbol{b}$ follows a normal distribution with mean $\boldsymbol{\beta}$ and variance-covariance matrix $\sigma^2\left(X^T X\right)^{-1}$.
+It is also possible to prove:
+\textbf{Theorem}. The statistic $(n-p-1) S^2 / \sigma^2=\mathrm{SS}_{\mathrm{E}} / \sigma^2$ is independent of $\boldsymbol{b}$.
 
 
+\subsection{Confidence Intervals and Prediction Intervals}
+We immediately obtain the following $100(1-\alpha) \%$ confidence intervals for the model parameters:
+\begin{equation}
+\beta_j=b_j \pm t_{\alpha / 2, n-p-1} S \sqrt{\xi_{j j}}, \quad j=0, \ldots, p
+\end{equation}
+Or by using the covariance matrix, we have
+\begin{equation}
+    \beta_j=b_j \pm t_{\alpha / 2, n-p-1} \sqrt{\operatorname{Var}[B_j]}, \quad j=0, \ldots, p
+    \end{equation}
+We have the following $100(1-\alpha) \%$ confidence interval for $\mu_{Y \mid x_0}$ :
+\begin{equation}
+\mu_{Y \mid x_0}=\widehat{\mu}_{Y \mid x_0} \pm t_{\alpha / 2, n-p-1} S \sqrt{x_0^T\left(X^T X\right)^{-1} x_0}
+\end{equation}
+And $100(1-\alpha) \%$ prediction interval for $Y \mid x_0$:
+\begin{equation}
+    Y \mid x_0=\widehat{\mu}_{Y \mid x_0} \pm t_{\alpha / 2, n-p-1} S \sqrt{1+x_0^T\left(X^T X\right)^{-1} x_0}
+    \end{equation}
+\textbf{Note that $p+1$ represents the number of parameters}.
+\subsection{Model Sufficiency Test}
+For single parameter test
+$$H_0 \text{ : } \beta_j=0$$
+we use the statistic
+\begin{equation}
+T_{n-p-1}=\dfrac{b_j}{S\sqrt{\xi_{jj}}} = \dfrac{b_j}{\sqrt{\operatorname{Var}[B_j]}}
+\end{equation}
+\textbf{Partial $F$-Test for Model Sufficiency}. Let $x_1, \ldots, x_p$ be possible predictor variables for $Y$ and (29.5) and (29.6) the full and reduced models, respectively. Then
+$$H_0 \text{ : the reduced model is sufficient}$$
+is rejected at significance level $\alpha$ if the test statistic
+$$
+F_{p-m, n-p-1}=\frac{n-p-1}{p-m} \frac{\mathrm{SS}_{\mathrm{E} ; \text { reduced }}-\mathrm{SS}_{\mathrm{E} ; \mathrm{full}}}{\mathrm{SS}_{\mathrm{E} ; \mathrm{full}}}
+$$
+satisfies $F_{p-m, n-p-1}>f_{\alpha, p-m, n-p-1}$.
 
 
 
